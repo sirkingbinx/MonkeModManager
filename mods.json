@@ -1,116 +1,29 @@
 {
-   "mods" : [
-      {
-         "name" : "BepInEx",
-         "tag" : "",
-         "gitPath" : "BepInEx/BepInEx",
-         "releaseId" : 1,
-         "author" : "BepInEx Team",
-         "group" : "Core"
-      },
-      {
-         "name" : "Gorilla Cosmetics",
-         "tag" : "",
-         "gitPath" : "legoandmars/GorillaCosmetics",
-         "releaseId" : 0,
-         "author" : "Bobbie",
-         "group" : "Cosmetic",
-         "dependencies" : [
-          "Newtonsoft.JSON"
-         ]
-      },
-      {
-         "name" : "Space Monke",
-         "tag" : "",
-         "gitPath" : "legoandmars/SpaceMonke",
-         "releaseId" : 0,
-         "author" : "Bobbie",
-         "group" : "Gameplay",
-         "dependencies" : [
-           "Utilla"
-          ]
-      },
-      {
-         "name" : "Utilla",
-         "tag" : "",
-         "gitPath" : "legoandmars/Utilla",
-         "releaseId" : 0,
-         "author" : "Bobbie",
-         "group" : "Libraries"
-      },
-      {
-        "name" : "Super Monke",
-        "tag" : "",
-        "gitPath" : "jeydevv/Super-Monke",
-        "releaseId": 1,
-        "author" : "jeydevv",
-        "group" : "Gameplay"
-      },
-      {
-        "name" : "Monke Mod Menu",
-        "tag" : "",
-        "gitPath" : "jeydevv/MonkeModMenu",
-        "releaseId": 1,
-        "author" : "jeydevv",
-        "group" : "Gameplay"
-      }
-      {
-        "name" : "Computer Interface",
-        "tag" : "",
-        "gitPath" : "ToniMacaroni/ComputerInterface",
-        "releaseId": 0,
-        "author" : "Toni Macaroni",
-        "group" : "Libraries",
-        "dependencies" : [
-          "Bepinject"
-        ]
-      }
-      {
-        "name" : "Bepinject",
-        "tag" : "",
-        "gitPath" : "Auros/Bepinject",
-        "releaseId": 0,
-        "author" : "Auros",
-        "group" : "Libraries",
-        "installPath" : "BepInEx/plugins",
-        "dependencies" : [
-          "Extenject"
-        ]
-      },
-      {
-        "name" : "Extenject",
-        "tag" : "",
-        "gitPath" : "Auros/Bepinject",
-        "releaseId": 1,
-        "author" : "svermeulen",
-        "group" : "Libraries",
-        "installPath" : "BepInEx/plugins"
-      },
-      {
-         "name" : "Newtonsoft.JSON",
-         "tag" : "",
-         "gitPath" : "legoandmars/Newtonsoft.Json",
-         "releaseId" : 0,
-         "author" : "James Newton-King",
-         "group" : "Libraries"
-      }
-   ],
-   "groups" : [
-     {
-       "name" : "Core",
-       "rank" : 0
-     },
-     {
-       "name" : "Cosmetic",
-       "rank" : 1
-     },
-     {
-       "name" : "Gameplay",
-       "rank" : 2
-     },
-     {
-       "name" : "Libraries",
-       "rank" : 3
-     }
-   ]
+	"mods": [
+		{
+			"name": "BepInEx",
+			"author": "BepInEx",
+			"version": "5.4.23.5",
+			"gitPath": "BepInEx/BepInEx",
+			"group": "Core",
+
+			"browser_download_url": "https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.5/BepInEx_win_x64_5.4.23.5.zip"
+		},
+		{
+			"name": "BepInEx.MelonLoader.Loader",
+			"author": "BepInEx",
+			"version": "2.1.0",
+			"gitPath": "BepInEx/BepInEx.MelonLoader.Loader",
+			"group": "Core",
+
+			"browser_download_url": "https://github.com/BepInEx/BepInEx.MelonLoader.Loader/releases/download/v2.1.0/MLLoader-UnityMono-BepInEx5-v0.5.7.zip"
+		},
+	],
+
+	"groups": [
+		"Core",
+		"Gameplay",
+		"Cosmetic",
+		"Tweaks"
+	]
 }
