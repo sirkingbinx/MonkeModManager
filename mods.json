@@ -19,14 +19,58 @@
 			"browser_download_url": "https://github.com/BepInEx/BepInEx.MelonLoader.Loader/releases/latest/download/MLLoader-UnityMono-BepInEx5-v0.5.7.zip"
 		},
 		{
-			"name": "BingusNametags++ [ML test]",
+			"name": "BingusNametags++",
 			"author": "bingus",
 			"version": "1.4.0",
 			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
 			"group": "Cosmetic",
-			"melonLoaderType": "Mods",
 
-			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.MelonLoader.dll"
+			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.BepInEx.zip"
+		},
+		{
+			"name": "HoneyLib",
+			"author": "Buzz",
+			"version": "1.1.5",
+			"gitPath": "BzzzThe18th/HoneyLib",
+			"group": "Libraries",
+
+			"browser_download_url": "https://github.com/BzzzThe18th/HoneyLib/releases/latest/download/HoneyLib.dll"
+		},
+		{
+			"name": "NoForestBarrier",
+			"author": "Silvaz",
+			"version": "1.0.1",
+			"gitPath": "SilvazWasTaken/NoForestBarrier",
+			"group": "Tweaks",
+
+			"browser_download_url": "https://github.com/SilvazWasTaken/NoForestBarrier/releases/latest/download/NoForestBarrier.dll"
+		},
+		{
+			"name": "MonkeCosmetics",
+			"author": "Ngbatz",
+			"version": "1.0.1",
+			"gitPath": "https://github.com/NgbatzYT/MonkeCosmetics",
+			"group": "Cosmetic",
+
+			"browser_download_url": "https://github.com/https://github.com/NgbatzYT/MonkeCosmetics/releases/latest/download/MonkeCosmetics.dll"
+		},
+		{
+			"name": "MonkeLib",
+			"author": "pl2w",
+			"version": "1.0.0",
+			"gitPath": "pl2w/MonkeLib",
+			"group": "Libraries",
+
+			"browser_download_url": "https://github.com/pl2w/MonkeLib/releases/latest/download/MonkeLib.dll"
+		},
+		{
+			"name": "HoneyLib",
+			"author": "Buzz",
+			"version": "1.1.5",
+			"gitPath": "BzzzThe18th/HoneyLib",
+			"group": "Libraries",
+
+			"browser_download_url": "https://github.com/BzzzThe18th/HoneyLib/releases/latest/download/HoneyLib.dll"
 		},
 	],
 
@@ -44,8 +88,12 @@
 			"rank" : 2
 		},
 		{
-			"name" : "Libraries",
+			"name" : "Tweaks",
 			"rank" : 3
+		},
+		{
+			"name" : "Libraries",
+			"rank" : 4
 		}
 	]
 }
