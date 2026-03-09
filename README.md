@@ -1,13 +1,8 @@
 # Monke Mod Manager
-![Preview](https://i.imgur.com/6mEIBxm.png)
-
-This program will install custom mods into Gorilla Tag automatically, and can be re-run in order to update the mods
-
-The program currently supports
-
-* [BepInEx](https://github.com/BepInEx/BepInEx) by **The BepInEx Team**
-* [Gorilla Cosmetics](https://github.com/legoandmars/GorillaCosmetics) by **Bobbie**
+<img width="566" height="406" alt="image" src="https://github.com/user-attachments/assets/2146316a-1527-4544-b2b2-be7a1d706592" />
 
 
-This uses the github api to get the latest release of all these mods, so you know you'll always be getting the latest version!
-(If you've made a mod that you want added to the installer, send me a message on Discord! `Steven 🎀#0001`)
+This is a fork of the [OG monke mod manager](https://github.com/burritosoftware/MonkeModManager) that has been updated with our cool new stuff.
+It supports BepInEx natively, and allows you to install MelonLoader mods through a compatability layer.
+
+If you want a mod added/removed, DM or ping me in either of the modding discords (`sirkingbinx`). We accept both BepInEx and MelonLoader mods.
