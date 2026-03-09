@@ -24,6 +24,7 @@
 			"version": "1.4.0",
 			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
 			"group": "Cosmetic",
+			"melonLoaderType": "Mods",
 
 			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/download/latest/BingusNametagsPlusPlus.MelonLoader.dll"
 		},
