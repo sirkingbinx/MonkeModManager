@@ -62,16 +62,7 @@
 			"group": "Libraries",
 
 			"browser_download_url": "https://github.com/pl2w/MonkeLib/releases/latest/download/MonkeLib.dll"
-		},
-		{
-			"name": "HoneyLib",
-			"author": "Buzz",
-			"version": "1.1.5",
-			"gitPath": "BzzzThe18th/HoneyLib",
-			"group": "Libraries",
-
-			"browser_download_url": "https://github.com/BzzzThe18th/HoneyLib/releases/latest/download/HoneyLib.dll"
-		},
+		}
 	],
 
 	"groups": [
