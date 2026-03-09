@@ -777,7 +777,7 @@ namespace MonkeModManager
 
                 var pluginsPath = Path.Combine(InstallDirectory, isBepInEx ? @"BepInEx\plugins" : @"MLLoader\Mods");
                 if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
-                string dir = Path.Combine(pluginsPath, Regex.Replace(Path.GetFileNameWithoutExtension(friendlyName), @"\s+", string.Empty));
+                string dir = Path.Combine(pluginsPath, isBepInEx ? Regex.Replace(Path.GetFileNameWithoutExtension(friendlyName), @"\s+", string.Empty) : "");
 
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
