@@ -50,7 +50,7 @@ namespace MonkeModManager
         private void LoadReleases()
         {
 
-            var decoded = JSON.Parse(DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/master/mods.json"));
+            var decoded = JSON.Parse(DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/refs/heads/master/mods.json"));
 
             var allMods = decoded["mods"].AsArray;
             var allGroups = decoded["groups"].AsArray;
@@ -58,7 +58,7 @@ namespace MonkeModManager
             for (int i = 0; i < allMods.Count; i++)
             {
                 JSONNode current = allMods[i];
-                ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["gitPath"], current["releaseId"], current["tag"], current["group"], current["installPath"], current["dependencies"].AsArray);
+                ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["gitPath"], current["version"], current["group"], current["dependencies"].AsArray);
                 UpdateReleaseInfo(ref release);
                 releases.Add(release);
             }
@@ -73,6 +73,7 @@ namespace MonkeModManager
                     groups.Add(current["name"], groups.Count());
                 }
             }
+
             groups.Add("Uncategorized", groups.Count());
 
             foreach (ReleaseInfo release in releases)
@@ -148,7 +149,7 @@ namespace MonkeModManager
             string releaseFormatted = BaseEndpoint + release.GitPath + "/releases";
             var rootNode = JSON.Parse(DownloadSite(releaseFormatted))[0];
             
-            release.Version = rootNode["tag_name"];
+            release.Version = rootNode["version"];
             
             var assetsNode = rootNode["assets"];
             var downloadReleaseNode = assetsNode[release.ReleaseId];
@@ -196,7 +197,7 @@ namespace MonkeModManager
                     }
                     else
                     {
-                        UnzipFile(file, (release.InstallLocation != null) ? Path.Combine(InstallDirectory, release.InstallLocation) : InstallDirectory);
+                        UnzipFile(file, InstallDirectory);
                     }
                     UpdateStatus(string.Format("Installed {0}!", release.Name));
                 }
@@ -560,9 +561,7 @@ namespace MonkeModManager
                 RQuest.Referer = "";
                 RQuest.UserAgent = "Monke-Mod-Manager";
                 RQuest.Proxy = null;
-#if DEBUG
-                RQuest.Headers.Add("Authorization", $"Token {File.ReadAllText("../../token.txt")}");
-#endif
+
                 HttpWebResponse Response = (HttpWebResponse)RQuest.GetResponse();
                 StreamReader Sr = new StreamReader(Response.GetResponseStream());
                 string Code = Sr.ReadToEnd();
