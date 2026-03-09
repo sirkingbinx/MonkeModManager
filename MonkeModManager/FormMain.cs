@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using MonkeModManager.Internals.SimpleJSON;
 using System.Text.RegularExpressions;
+using Microsoft.Win32;
 
 namespace MonkeModManager
 {
@@ -48,11 +49,9 @@ namespace MonkeModManager
 
         private void LoadReleases()
         {
-#if !DEBUG
-            var decoded = JSON.Parse(DownloadSite("https://raw.githubusercontent.com/DeadlyKitten/MonkeModManager/master/mods.json"));
-#else
-            var decoded = JSON.Parse(File.ReadAllText("C:/Users/Steven/Desktop/testmods.json"));
-#endif
+
+            var decoded = JSON.Parse(DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/master/mods.json"));
+
             var allMods = decoded["mods"].AsArray;
             var allGroups = decoded["groups"].AsArray;
 
@@ -630,6 +629,7 @@ namespace MonkeModManager
                             InstallDirectory = Path.GetDirectoryName(path);
                             textBoxDirectory.Text = InstallDirectory;
                             found = true;
+                            SetSavedLocation(InstallDirectory);
                         }
                         else
                         {
@@ -647,13 +647,13 @@ namespace MonkeModManager
         private void CheckVersion()
         {
             UpdateStatus("Checking for updates...");
-            Int16 version = Convert.ToInt16(DownloadSite("https://raw.githubusercontent.com/DeadlyKitten/MonkeModManager/master/update.txt"));
+            Int16 version = Convert.ToInt16(DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/master/update.txt"));
             if (version > CurrentVersion)
             {
                 this.Invoke((MethodInvoker)(() =>
                 {
                     MessageBox.Show("Your version of the mod installer is outdated! Please download the new one!", "Update available!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    Process.Start("https://github.com/DeadlyKitten/MonkeModManager/releases/latest");
+                    Process.Start("https://github.com/sirkingbinx/MonkeModManager/releases/latest");
                     Process.GetCurrentProcess().Kill();
                     Environment.Exit(0);
                 }));
@@ -685,20 +685,21 @@ namespace MonkeModManager
 
         private void LocationHandler()
         {
-            string steam = GetSteamLocation();
-            if (steam != null)
+            var knownPath = GetSavedLocation();
+            if (knownPath == "")
+                knownPath = GetSteamLocation();
+
+            if (knownPath != "" && Directory.Exists(knownPath) && File.Exists(knownPath + @"\Gorilla Tag.exe"))
             {
-                if (Directory.Exists(steam))
+                if (File.Exists(knownPath + @"\Gorilla Tag.exe"))
                 {
-                    if (File.Exists(steam + @"\Gorilla Tag.exe"))
-                    {
-                        textBoxDirectory.Text = steam;
-                        InstallDirectory = steam;
-                        platformDetected = true;
-                        return;
-                    }
+                    textBoxDirectory.Text = knownPath;
+                    InstallDirectory = knownPath;
+                    platformDetected = true;
+                    return;
                 }
             }
+
             ShowErrorFindingDirectoryMessage();
         }
         private void ShowErrorFindingDirectoryMessage()
@@ -709,13 +710,19 @@ namespace MonkeModManager
         }
         private string GetSteamLocation()
         {
-            string path = RegistryWOW6432.GetRegKey64(RegHive.HKEY_LOCAL_MACHINE, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 1533390", @"InstallLocation");
-            if (path != null)
-            {
-                path = path + @"\";
-            }
-            return path;
+            return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 1533390", @"InstallLocation", "");
         }
+
+        private string GetSavedLocation()
+        {
+            return (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", @"InstallPath", "");
+        }
+
+        private void SetSavedLocation(string path)
+        {
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "InstallPath", path);
+        }
+
         private void CheckDefaultMod(ReleaseInfo release, ListViewItem item)
         {
             if (release.Name.Contains("BepInEx"))
@@ -730,76 +737,5 @@ namespace MonkeModManager
         }
 #endregion // Registry
 
-        #region RegHelper
-        enum RegSAM
-        {
-            QueryValue = 0x0001,
-            SetValue = 0x0002,
-            CreateSubKey = 0x0004,
-            EnumerateSubKeys = 0x0008,
-            Notify = 0x0010,
-            CreateLink = 0x0020,
-            WOW64_32Key = 0x0200,
-            WOW64_64Key = 0x0100,
-            WOW64_Res = 0x0300,
-            Read = 0x00020019,
-            Write = 0x00020006,
-            Execute = 0x00020019,
-            AllAccess = 0x000f003f
-        }
-
-        static class RegHive
-        {
-            public static UIntPtr HKEY_LOCAL_MACHINE = new UIntPtr(0x80000002u);
-            public static UIntPtr HKEY_CURRENT_USER = new UIntPtr(0x80000001u);
-        }
-
-        static class RegistryWOW6432
-        {
-            [DllImport("Advapi32.dll")]
-            static extern uint RegOpenKeyEx(UIntPtr hKey, string lpSubKey, uint ulOptions, int samDesired, out int phkResult);
-
-            [DllImport("Advapi32.dll")]
-            static extern uint RegCloseKey(int hKey);
-
-            [DllImport("advapi32.dll", EntryPoint = "RegQueryValueEx")]
-            public static extern int RegQueryValueEx(int hKey, string lpValueName, int lpReserved, ref uint lpType, System.Text.StringBuilder lpData, ref uint lpcbData);
-
-            static public string GetRegKey64(UIntPtr inHive, String inKeyName, string inPropertyName)
-            {
-                return GetRegKey64(inHive, inKeyName, RegSAM.WOW64_64Key, inPropertyName);
-            }
-
-            static public string GetRegKey32(UIntPtr inHive, String inKeyName, string inPropertyName)
-            {
-                return GetRegKey64(inHive, inKeyName, RegSAM.WOW64_32Key, inPropertyName);
-            }
-
-            static public string GetRegKey64(UIntPtr inHive, String inKeyName, RegSAM in32or64key, string inPropertyName)
-            {
-                //UIntPtr HKEY_LOCAL_MACHINE = (UIntPtr)0x80000002;
-                int hkey = 0;
-
-                try
-                {
-                    uint lResult = RegOpenKeyEx(RegHive.HKEY_LOCAL_MACHINE, inKeyName, 0, (int)RegSAM.QueryValue | (int)in32or64key, out hkey);
-                    if (0 != lResult) return null;
-                    uint lpType = 0;
-                    uint lpcbData = 1024;
-                    StringBuilder AgeBuffer = new StringBuilder(1024);
-                    RegQueryValueEx(hkey, inPropertyName, 0, ref lpType, AgeBuffer, ref lpcbData);
-                    string Age = AgeBuffer.ToString();
-                    return Age;
-                }
-                finally
-                {
-                    if (0 != hkey) RegCloseKey(hkey);
-                }
-            }
-        }
-
-        #endregion // RegHelper
-
     }
-
 }
