@@ -58,13 +58,10 @@ namespace MonkeModManager
             for (int i = 0; i < allMods.Count; i++)
             {
                 JSONNode current = allMods[i];
-                ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["gitPath"], current["version"], current["group"], current["dependencies"].AsArray);
-                UpdateReleaseInfo(ref release);
+                ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["gitPath"], current["version"], current["group"], current["browser_download_url"], current["dependencies"].AsArray);
                 releases.Add(release);
             }
 
-
-            allGroups.Linq.OrderBy(x => x.Value["rank"]);
             for (int i = 0; i < allGroups.Count; i++)
             {
                 JSONNode current = allGroups[i];
@@ -108,7 +105,6 @@ namespace MonkeModManager
                     ListViewItem item = new ListViewItem();
                     item.Text = release.Name;
                     if (!String.IsNullOrEmpty(release.Version)) item.Text = $"{release.Name} - {release.Version}";
-                    if (!String.IsNullOrEmpty(release.Tag)) { item.Text = string.Format("{0} - ({1})",release.Name, release.Tag); };
                     item.SubItems.Add(release.Author);
                     item.Tag = release;
                     if (release.Install)
@@ -139,24 +135,6 @@ namespace MonkeModManager
             }));
            
             UpdateStatus("Release info updated!");
-
-        }
-
-        private void UpdateReleaseInfo(ref ReleaseInfo release)
-        {
-            Thread.Sleep(100); //So we don't get rate limited by github
-
-            string releaseFormatted = BaseEndpoint + release.GitPath + "/releases";
-            var rootNode = JSON.Parse(DownloadSite(releaseFormatted))[0];
-            
-            release.Version = rootNode["version"];
-            
-            var assetsNode = rootNode["assets"];
-            var downloadReleaseNode = assetsNode[release.ReleaseId];
-            release.Link = downloadReleaseNode["browser_download_url"];
-            
-            var uploaderNode = downloadReleaseNode["uploader"];
-            if (release.Author.Equals(String.Empty)) release.Author = uploaderNode["login"];
         }
 
         #endregion // ReleaseHandling
@@ -178,15 +156,10 @@ namespace MonkeModManager
                     if (Path.GetExtension(fileName).Equals(".dll"))
                     {
                         string dir;
-                        if (release.InstallLocation == null)
-                        {
-                            dir = Path.Combine(InstallDirectory, @"BepInEx\plugins", Regex.Replace(release.Name, @"\s+", string.Empty));
-                            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                        }
-                        else
-                        {
-                            dir = Path.Combine(InstallDirectory, release.InstallLocation);
-                        }
+                        
+                        dir = Path.Combine(InstallDirectory, @"BepInEx\plugins", Regex.Replace(release.Name, @"\s+", string.Empty));
+                        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                        
                         File.WriteAllBytes(Path.Combine(dir, fileName), file);
 
                         var dllFile = Path.Combine(InstallDirectory, @"BepInEx\plugins", fileName);
@@ -285,7 +258,7 @@ namespace MonkeModManager
                 }
             }
 
-            if (release.Name.Contains("BepInEx")) { e.Item.Checked = true; };
+            if (release.Name == "BepInEx") { e.Item.Checked = true; }
             release.Install = e.Item.Checked;
         }
 
@@ -540,7 +513,7 @@ namespace MonkeModManager
 
         private void buttonDiscordLink_Click(object sender, EventArgs e)
         {
-            Process.Start("https://discord.gg/ux4ZbBC6JQ");
+            Process.Start("https://discord.gg/monkemod");
         }
 
         #endregion // UIEvents
@@ -724,7 +697,7 @@ namespace MonkeModManager
 
         private void CheckDefaultMod(ReleaseInfo release, ListViewItem item)
         {
-            if (release.Name.Contains("BepInEx"))
+            if (release.Name == "BepInEx")
             {
                 item.Checked = true;
                 item.ForeColor = System.Drawing.Color.DimGray;
