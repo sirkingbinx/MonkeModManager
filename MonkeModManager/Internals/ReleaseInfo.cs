@@ -15,10 +15,12 @@ namespace MonkeModManager.Internals
         public string GitPath;
         public string Group;
         public bool Install = true;
+        public bool MelonLoader;
+        public string MLInstallPath;
 
         public List<string> Dependencies = new List<string>();
         public List<string> Dependents = new List<string>();
-        public ReleaseInfo(string _name, string _author, string _gitPath, string _version, string _group, string _downloadUrl, JSONArray dependencies)
+        public ReleaseInfo(string _name, string _author, string _gitPath, string _version, string _group, string _downloadUrl, string _whereML, JSONArray dependencies)
         {
             Name = _name;
             Author = _author;
@@ -26,6 +28,11 @@ namespace MonkeModManager.Internals
             Version = _version;
             Group = _group;
             Link = _downloadUrl;
+            MelonLoader = _whereML != null;
+            MLInstallPath = _whereML;
+
+            //if (MelonLoader)
+               // Dependencies.Add("BepInEx.MelonLoader.Loader");
 
             if (dependencies == null) return;
             for (int i = 0; i < dependencies.Count; i++)

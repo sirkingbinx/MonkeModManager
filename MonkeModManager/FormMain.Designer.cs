@@ -43,27 +43,30 @@
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Utilities = new System.Windows.Forms.TabPage();
+            this.labelVersion = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.buttonOpenWiki = new System.Windows.Forms.Button();
             this.buttonDiscordLink = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonBepInEx = new System.Windows.Forms.Button();
             this.buttonOpenConfig = new System.Windows.Forms.Button();
             this.buttonOpenGameFolder = new System.Windows.Forms.Button();
             this.labelOpen = new System.Windows.Forms.Label();
-            this.buttonRestoreCosmetics = new System.Windows.Forms.Button();
-            this.buttonRestoreMods = new System.Windows.Forms.Button();
-            this.buttonBackupCosmetics = new System.Windows.Forms.Button();
+            this.installMLModButton = new System.Windows.Forms.Button();
             this.buttonBackupMods = new System.Windows.Forms.Button();
             this.buttonUninstallAll = new System.Windows.Forms.Button();
             this.buttonModInfo = new System.Windows.Forms.Button();
-            this.labelVersion = new System.Windows.Forms.Label();
+            this.mlFolder = new System.Windows.Forms.Button();
+            this.installBepModButton = new System.Windows.Forms.Button();
+            this.installMelonLoaderMod = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControlMain.SuspendLayout();
             this.Plugins.SuspendLayout();
             this.contextMenuStripMain.SuspendLayout();
             this.Utilities.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxDirectory
@@ -92,7 +95,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 13);
+            this.label1.Size = new System.Drawing.Size(126, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Gorilla Tag Folder Path:";
             // 
@@ -191,14 +194,12 @@
             // 
             // Utilities
             // 
+            this.Utilities.Controls.Add(this.groupBox2);
             this.Utilities.Controls.Add(this.labelVersion);
             this.Utilities.Controls.Add(this.pictureBox1);
-            this.Utilities.Controls.Add(this.buttonOpenWiki);
             this.Utilities.Controls.Add(this.buttonDiscordLink);
             this.Utilities.Controls.Add(this.groupBox1);
-            this.Utilities.Controls.Add(this.buttonRestoreCosmetics);
-            this.Utilities.Controls.Add(this.buttonRestoreMods);
-            this.Utilities.Controls.Add(this.buttonBackupCosmetics);
+            this.Utilities.Controls.Add(this.installMLModButton);
             this.Utilities.Controls.Add(this.buttonBackupMods);
             this.Utilities.Controls.Add(this.buttonUninstallAll);
             this.Utilities.Location = new System.Drawing.Point(4, 22);
@@ -207,6 +208,18 @@
             this.Utilities.TabIndex = 1;
             this.Utilities.Text = "Utilities";
             this.Utilities.UseVisualStyleBackColor = true;
+            // 
+            // labelVersion
+            // 
+            this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.labelVersion.AutoSize = true;
+            this.labelVersion.Location = new System.Drawing.Point(188, 209);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(119, 13);
+            this.labelVersion.TabIndex = 11;
+            this.labelVersion.Text = "Monke Mod Manager";
+            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.labelVersion.UseMnemonic = false;
             // 
             // pictureBox1
             // 
@@ -218,19 +231,9 @@
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
-            // buttonOpenWiki
-            // 
-            this.buttonOpenWiki.Location = new System.Drawing.Point(379, 183);
-            this.buttonOpenWiki.Name = "buttonOpenWiki";
-            this.buttonOpenWiki.Size = new System.Drawing.Size(134, 23);
-            this.buttonOpenWiki.TabIndex = 9;
-            this.buttonOpenWiki.Text = "Check out the guides!";
-            this.buttonOpenWiki.UseVisualStyleBackColor = true;
-            this.buttonOpenWiki.Click += new System.EventHandler(this.buttonOpenWiki_Click);
-            // 
             // buttonDiscordLink
             // 
-            this.buttonDiscordLink.Location = new System.Drawing.Point(379, 153);
+            this.buttonDiscordLink.Location = new System.Drawing.Point(379, 183);
             this.buttonDiscordLink.Name = "buttonDiscordLink";
             this.buttonDiscordLink.Size = new System.Drawing.Size(134, 23);
             this.buttonDiscordLink.TabIndex = 8;
@@ -240,13 +243,14 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.mlFolder);
             this.groupBox1.Controls.Add(this.buttonBepInEx);
             this.groupBox1.Controls.Add(this.buttonOpenConfig);
             this.groupBox1.Controls.Add(this.buttonOpenGameFolder);
             this.groupBox1.Controls.Add(this.labelOpen);
             this.groupBox1.Location = new System.Drawing.Point(373, 16);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(146, 130);
+            this.groupBox1.Size = new System.Drawing.Size(146, 157);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
@@ -289,35 +293,15 @@
             this.labelOpen.TabIndex = 6;
             this.labelOpen.Text = "Important Folders";
             // 
-            // buttonRestoreCosmetics
+            // installMLModButton
             // 
-            this.buttonRestoreCosmetics.Location = new System.Drawing.Point(14, 173);
-            this.buttonRestoreCosmetics.Name = "buttonRestoreCosmetics";
-            this.buttonRestoreCosmetics.Size = new System.Drawing.Size(132, 37);
-            this.buttonRestoreCosmetics.TabIndex = 4;
-            this.buttonRestoreCosmetics.Text = "Restore Cosmetics from Backup";
-            this.buttonRestoreCosmetics.UseVisualStyleBackColor = true;
-            this.buttonRestoreCosmetics.Click += new System.EventHandler(this.buttonRestoreCosmetics_Click);
-            // 
-            // buttonRestoreMods
-            // 
-            this.buttonRestoreMods.Location = new System.Drawing.Point(14, 130);
-            this.buttonRestoreMods.Name = "buttonRestoreMods";
-            this.buttonRestoreMods.Size = new System.Drawing.Size(132, 37);
-            this.buttonRestoreMods.TabIndex = 3;
-            this.buttonRestoreMods.Text = "Restore Mods from Backup";
-            this.buttonRestoreMods.UseVisualStyleBackColor = true;
-            this.buttonRestoreMods.Click += new System.EventHandler(this.buttonRestoreMods_Click);
-            // 
-            // buttonBackupCosmetics
-            // 
-            this.buttonBackupCosmetics.Location = new System.Drawing.Point(14, 101);
-            this.buttonBackupCosmetics.Name = "buttonBackupCosmetics";
-            this.buttonBackupCosmetics.Size = new System.Drawing.Size(132, 23);
-            this.buttonBackupCosmetics.TabIndex = 2;
-            this.buttonBackupCosmetics.Text = "Backup Cosmetics";
-            this.buttonBackupCosmetics.UseVisualStyleBackColor = true;
-            this.buttonBackupCosmetics.Click += new System.EventHandler(this.buttonBackupCosmetics_Click);
+            this.installMLModButton.Location = new System.Drawing.Point(14, 101);
+            this.installMLModButton.Name = "installMLModButton";
+            this.installMLModButton.Size = new System.Drawing.Size(132, 23);
+            this.installMLModButton.TabIndex = 3;
+            this.installMLModButton.Text = "Restore Mods";
+            this.installMLModButton.UseVisualStyleBackColor = true;
+            this.installMLModButton.Click += new System.EventHandler(this.buttonRestoreMods_Click);
             // 
             // buttonBackupMods
             // 
@@ -351,17 +335,54 @@
             this.buttonModInfo.UseVisualStyleBackColor = true;
             this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
             // 
-            // labelVersion
+            // mlFolder
             // 
-            this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.labelVersion.AutoSize = true;
-            this.labelVersion.Location = new System.Drawing.Point(188, 209);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(119, 13);
-            this.labelVersion.TabIndex = 11;
-            this.labelVersion.Text = "Monke Mod Manager";
-            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.labelVersion.UseMnemonic = false;
+            this.mlFolder.Location = new System.Drawing.Point(6, 125);
+            this.mlFolder.Name = "mlFolder";
+            this.mlFolder.Size = new System.Drawing.Size(134, 23);
+            this.mlFolder.TabIndex = 7;
+            this.mlFolder.Text = "MelonLoader Folder";
+            this.mlFolder.UseVisualStyleBackColor = true;
+            // 
+            // installBepModButton
+            // 
+            this.installBepModButton.Location = new System.Drawing.Point(6, 28);
+            this.installBepModButton.Name = "installBepModButton";
+            this.installBepModButton.Size = new System.Drawing.Size(132, 23);
+            this.installBepModButton.TabIndex = 12;
+            this.installBepModButton.Text = "BepInEx Mod";
+            this.installBepModButton.UseVisualStyleBackColor = true;
+            this.installBepModButton.Click += new System.EventHandler(this.installBepModButton_Click);
+            // 
+            // installMelonLoaderMod
+            // 
+            this.installMelonLoaderMod.Location = new System.Drawing.Point(8, 53);
+            this.installMelonLoaderMod.Name = "installMelonLoaderMod";
+            this.installMelonLoaderMod.Size = new System.Drawing.Size(132, 23);
+            this.installMelonLoaderMod.TabIndex = 13;
+            this.installMelonLoaderMod.Text = "MelonLoader Mod";
+            this.installMelonLoaderMod.UseVisualStyleBackColor = true;
+            this.installMelonLoaderMod.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.installMelonLoaderMod);
+            this.groupBox2.Controls.Add(this.installBepModButton);
+            this.groupBox2.Location = new System.Drawing.Point(14, 130);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(146, 83);
+            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(40, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Install Mod";
             // 
             // FormMain
             // 
@@ -389,6 +410,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -412,18 +435,20 @@
         private System.Windows.Forms.TabPage Utilities;
         private System.Windows.Forms.Button buttonUninstallAll;
         private System.Windows.Forms.Button buttonBackupMods;
-        private System.Windows.Forms.Button buttonBackupCosmetics;
-        private System.Windows.Forms.Button buttonRestoreMods;
-        private System.Windows.Forms.Button buttonRestoreCosmetics;
+        private System.Windows.Forms.Button installMLModButton;
         private System.Windows.Forms.Label labelOpen;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button buttonBepInEx;
         private System.Windows.Forms.Button buttonOpenConfig;
         private System.Windows.Forms.Button buttonOpenGameFolder;
-        private System.Windows.Forms.Button buttonOpenWiki;
         private System.Windows.Forms.Button buttonDiscordLink;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.Button installBepModButton;
+        private System.Windows.Forms.Button mlFolder;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button installMelonLoaderMod;
     }
 }
 

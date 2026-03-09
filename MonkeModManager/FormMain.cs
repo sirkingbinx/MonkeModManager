@@ -1,18 +1,21 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using MonkeModManager.Internals;
+using MonkeModManager.Internals.SimpleJSON;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Net;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
-using System.Threading;
-using MonkeModManager.Internals;
-using System.Diagnostics;
+using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
-using MonkeModManager.Internals.SimpleJSON;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting.Lifetime;
+using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.Win32;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace MonkeModManager
 {
@@ -51,14 +54,14 @@ namespace MonkeModManager
         {
 
             var decoded = JSON.Parse(DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/refs/heads/master/mods.json"));
-
+            
             var allMods = decoded["mods"].AsArray;
             var allGroups = decoded["groups"].AsArray;
 
             for (int i = 0; i < allMods.Count; i++)
             {
                 JSONNode current = allMods[i];
-                ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["gitPath"], current["version"], current["group"], current["browser_download_url"], current["dependencies"].AsArray);
+                ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["gitPath"], current["version"], current["group"], current["browser_download_url"], current["melonLoaderType"], current["dependencies"].AsArray);
                 releases.Add(release);
             }
 
@@ -137,7 +140,7 @@ namespace MonkeModManager
             UpdateStatus("Release info updated!");
         }
 
-        #endregion // ReleaseHandling
+#endregion // ReleaseHandling
 
         #region Installation
 
@@ -145,38 +148,67 @@ namespace MonkeModManager
         {
             ChangeInstallButtonState(false);
             UpdateStatus("Starting install sequence...");
-            foreach (ReleaseInfo release in releases)
+            foreach (ReleaseInfo release in releases.Where(r => r.Install))
             {
-                if (release.Install)
+                UpdateStatus(string.Format("Downloading...{0}", release.Name));
+                byte[] file = DownloadFile(release.Link);
+                UpdateStatus(string.Format("Installing...{0}", release.Name));
+                string fileName = Path.GetFileName(release.Link);
+                if (Path.GetExtension(fileName).Equals(".dll"))
                 {
-                    UpdateStatus(string.Format("Downloading...{0}", release.Name));
-                    byte[] file = DownloadFile(release.Link);
-                    UpdateStatus(string.Format("Installing...{0}", release.Name));
-                    string fileName = Path.GetFileName(release.Link);
-                    if (Path.GetExtension(fileName).Equals(".dll"))
-                    {
-                        string dir;
-                        
-                        dir = Path.Combine(InstallDirectory, @"BepInEx\plugins", Regex.Replace(release.Name, @"\s+", string.Empty));
-                        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                        
-                        File.WriteAllBytes(Path.Combine(dir, fileName), file);
+                    var pluginsPath = Path.Combine(InstallDirectory, release.MelonLoader ? $"MLLoader\\{release.MLInstallPath}" : @"BepInEx\plugins");
+                    if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
+                    string dir = Path.Combine(pluginsPath, Regex.Replace(release.Name, @"\s+", string.Empty));
+                    
+                    if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                    
+                    File.WriteAllBytes(Path.Combine(dir, fileName), file);
 
-                        var dllFile = Path.Combine(InstallDirectory, @"BepInEx\plugins", fileName);
-                        if (File.Exists(dllFile))
-                        {
-                            File.Delete(dllFile);
-                        }
-                    }
-                    else
+                    var dllFile = Path.Combine(InstallDirectory, @"BepInEx\plugins", fileName);
+                    if (File.Exists(dllFile))
                     {
-                        UnzipFile(file, InstallDirectory);
+                        File.Delete(dllFile);
                     }
-                    UpdateStatus(string.Format("Installed {0}!", release.Name));
                 }
+                else
+                {
+                    UnzipFile(file, InstallDirectory);
+                }
+                UpdateStatus(string.Format("Installed {0}!", release.Name));
             }
             UpdateStatus("Install complete!");
             ChangeInstallButtonState(true);
+        }
+
+        void InstallMod(string modName)
+        {
+            var release = releases.First(r => r.Name == modName);
+
+            UpdateStatus(string.Format("Downloading...{0}", release.Name));
+            byte[] file = DownloadFile(release.Link);
+            UpdateStatus(string.Format("Installing...{0}", release.Name));
+            string fileName = Path.GetFileName(release.Link);
+            if (Path.GetExtension(fileName).Equals(".dll"))
+            {
+                var pluginsPath = Path.Combine(InstallDirectory, release.MelonLoader ? $"MLLoader\\{release.MLInstallPath}" : @"BepInEx\plugins");
+                if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
+                string dir = Path.Combine(pluginsPath, Regex.Replace(release.Name, @"\s+", string.Empty));
+
+                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
+                File.WriteAllBytes(Path.Combine(dir, fileName), file);
+
+                var dllFile = Path.Combine(InstallDirectory, @"BepInEx\plugins", fileName);
+                if (File.Exists(dllFile))
+                {
+                    File.Delete(dllFile);
+                }
+            }
+            else
+            {
+                UnzipFile(file, InstallDirectory);
+            }
+            UpdateStatus(string.Format("Installed {0}!", release.Name));
         }
 
         #endregion // Installation
@@ -707,7 +739,52 @@ namespace MonkeModManager
                 release.Install = false;
             }
         }
-#endregion // Registry
+        #endregion // Registry
 
+#region InstallHelpers
+
+        private void installModFromSystem(bool isBepInEx = true)
+        {
+            using (var fileDialog = new OpenFileDialog())
+            {
+                fileDialog.Filter = "Plugins (*.dll)|*.dll|All Files (*.*)|*.*";
+                fileDialog.FilterIndex = 1;
+
+                if (fileDialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                if (!isBepInEx)
+                    InstallMod("BepInEx.MelonLoader.Loader");
+
+                var path = fileDialog.FileName;
+                var friendlyName = fileDialog.SafeFileName ?? path;
+
+                var pluginsPath = Path.Combine(InstallDirectory, isBepInEx ? @"BepInEx\plugins" : @"MLLoader\Mods");
+                if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
+                string dir = Path.Combine(pluginsPath, Regex.Replace(Path.GetFileNameWithoutExtension(friendlyName), @"\s+", string.Empty));
+
+                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
+                File.WriteAllBytes(Path.Combine(dir, friendlyName), File.ReadAllBytes(path));
+
+                var dllFile = Path.Combine(InstallDirectory, @"BepInEx\plugins", friendlyName);
+                if (File.Exists(dllFile))
+                {
+                    File.Delete(dllFile);
+                }
+            }
+        }
+
+        private void installBepModButton_Click(object sender, EventArgs e)
+        {
+            installModFromSystem(true);
+        }
+
+        #endregion
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            installModFromSystem(false);
+        }
     }
 }
