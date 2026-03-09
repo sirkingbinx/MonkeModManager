@@ -16,7 +16,7 @@
 			"gitPath": "BepInEx/BepInEx.MelonLoader.Loader",
 			"group": "Core",
 
-			"browser_download_url": "https://github.com/BepInEx/BepInEx.MelonLoader.Loader/releases/download/latest/MLLoader-UnityMono-BepInEx5-v0.5.7.zip"
+			"browser_download_url": "https://github.com/BepInEx/BepInEx.MelonLoader.Loader/releases/download/v2.1.0/MLLoader-UnityMono-BepInEx5-v0.5.7.zip"
 		},
 		{
 			"name": "BingusNametags++ [ML test]",
