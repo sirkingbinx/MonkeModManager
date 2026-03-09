@@ -43,10 +43,15 @@
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Utilities = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.installMelonLoaderMod = new System.Windows.Forms.Button();
+            this.installBepModButton = new System.Windows.Forms.Button();
             this.labelVersion = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonDiscordLink = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.mlFolder = new System.Windows.Forms.Button();
             this.buttonBepInEx = new System.Windows.Forms.Button();
             this.buttonOpenConfig = new System.Windows.Forms.Button();
             this.buttonOpenGameFolder = new System.Windows.Forms.Button();
@@ -55,18 +60,13 @@
             this.buttonBackupMods = new System.Windows.Forms.Button();
             this.buttonUninstallAll = new System.Windows.Forms.Button();
             this.buttonModInfo = new System.Windows.Forms.Button();
-            this.mlFolder = new System.Windows.Forms.Button();
-            this.installBepModButton = new System.Windows.Forms.Button();
-            this.installMelonLoaderMod = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabControlMain.SuspendLayout();
             this.Plugins.SuspendLayout();
             this.contextMenuStripMain.SuspendLayout();
             this.Utilities.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxDirectory
@@ -209,6 +209,46 @@
             this.Utilities.Text = "Utilities";
             this.Utilities.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.installMelonLoaderMod);
+            this.groupBox2.Controls.Add(this.installBepModButton);
+            this.groupBox2.Location = new System.Drawing.Point(14, 130);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(146, 83);
+            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(40, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Install Mod";
+            // 
+            // installMelonLoaderMod
+            // 
+            this.installMelonLoaderMod.Location = new System.Drawing.Point(8, 53);
+            this.installMelonLoaderMod.Name = "installMelonLoaderMod";
+            this.installMelonLoaderMod.Size = new System.Drawing.Size(132, 23);
+            this.installMelonLoaderMod.TabIndex = 13;
+            this.installMelonLoaderMod.Text = "MelonLoader Mod";
+            this.installMelonLoaderMod.UseVisualStyleBackColor = true;
+            this.installMelonLoaderMod.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // installBepModButton
+            // 
+            this.installBepModButton.Location = new System.Drawing.Point(6, 28);
+            this.installBepModButton.Name = "installBepModButton";
+            this.installBepModButton.Size = new System.Drawing.Size(132, 23);
+            this.installBepModButton.TabIndex = 12;
+            this.installBepModButton.Text = "BepInEx Mod";
+            this.installBepModButton.UseVisualStyleBackColor = true;
+            this.installBepModButton.Click += new System.EventHandler(this.installBepModButton_Click);
+            // 
             // labelVersion
             // 
             this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
@@ -253,6 +293,16 @@
             this.groupBox1.Size = new System.Drawing.Size(146, 157);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
+            // 
+            // mlFolder
+            // 
+            this.mlFolder.Location = new System.Drawing.Point(6, 125);
+            this.mlFolder.Name = "mlFolder";
+            this.mlFolder.Size = new System.Drawing.Size(134, 23);
+            this.mlFolder.TabIndex = 7;
+            this.mlFolder.Text = "MelonLoader Folder";
+            this.mlFolder.UseVisualStyleBackColor = true;
+            this.mlFolder.Click += new System.EventHandler(this.mlFolder_Click);
             // 
             // buttonBepInEx
             // 
@@ -335,55 +385,6 @@
             this.buttonModInfo.UseVisualStyleBackColor = true;
             this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
             // 
-            // mlFolder
-            // 
-            this.mlFolder.Location = new System.Drawing.Point(6, 125);
-            this.mlFolder.Name = "mlFolder";
-            this.mlFolder.Size = new System.Drawing.Size(134, 23);
-            this.mlFolder.TabIndex = 7;
-            this.mlFolder.Text = "MelonLoader Folder";
-            this.mlFolder.UseVisualStyleBackColor = true;
-            // 
-            // installBepModButton
-            // 
-            this.installBepModButton.Location = new System.Drawing.Point(6, 28);
-            this.installBepModButton.Name = "installBepModButton";
-            this.installBepModButton.Size = new System.Drawing.Size(132, 23);
-            this.installBepModButton.TabIndex = 12;
-            this.installBepModButton.Text = "BepInEx Mod";
-            this.installBepModButton.UseVisualStyleBackColor = true;
-            this.installBepModButton.Click += new System.EventHandler(this.installBepModButton_Click);
-            // 
-            // installMelonLoaderMod
-            // 
-            this.installMelonLoaderMod.Location = new System.Drawing.Point(8, 53);
-            this.installMelonLoaderMod.Name = "installMelonLoaderMod";
-            this.installMelonLoaderMod.Size = new System.Drawing.Size(132, 23);
-            this.installMelonLoaderMod.TabIndex = 13;
-            this.installMelonLoaderMod.Text = "MelonLoader Mod";
-            this.installMelonLoaderMod.UseVisualStyleBackColor = true;
-            this.installMelonLoaderMod.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.installMelonLoaderMod);
-            this.groupBox2.Controls.Add(this.installBepModButton);
-            this.groupBox2.Location = new System.Drawing.Point(14, 130);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(146, 83);
-            this.groupBox2.TabIndex = 8;
-            this.groupBox2.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Install Mod";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -407,11 +408,11 @@
             this.contextMenuStripMain.ResumeLayout(false);
             this.Utilities.ResumeLayout(false);
             this.Utilities.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

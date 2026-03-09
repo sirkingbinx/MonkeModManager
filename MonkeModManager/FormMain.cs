@@ -385,8 +385,6 @@ namespace MonkeModManager
                 }
                 UpdateStatus("Successfully backed up mods!");
             }
-
-
         }
 
         private void buttonBackupCosmetics_Click(object sender, EventArgs e)
@@ -546,6 +544,24 @@ namespace MonkeModManager
         private void buttonDiscordLink_Click(object sender, EventArgs e)
         {
             Process.Start("https://discord.gg/monkemod");
+        }
+
+        private void installBepModButton_Click(object sender, EventArgs e)
+        {
+            installModFromSystem(true);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            installModFromSystem(false);
+        }
+
+        private void mlFolder_Click(object sender, EventArgs e)
+        {
+            if (!Directory.Exists(Path.Combine(InstallDirectory, "MLLoader")))
+                InstallMod("BepInEx.MelonLoader.Loader");
+
+            Process.Start(Path.Combine(InstallDirectory, "MLLoader"));
         }
 
         #endregion // UIEvents
@@ -741,7 +757,7 @@ namespace MonkeModManager
         }
         #endregion // Registry
 
-#region InstallHelpers
+        #region InstallHelpers
 
         private void installModFromSystem(bool isBepInEx = true)
         {
@@ -774,17 +790,6 @@ namespace MonkeModManager
                 }
             }
         }
-
-        private void installBepModButton_Click(object sender, EventArgs e)
-        {
-            installModFromSystem(true);
-        }
-
         #endregion
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            installModFromSystem(false);
-        }
     }
 }
