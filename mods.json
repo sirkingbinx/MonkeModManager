@@ -10,13 +10,13 @@
 			"browser_download_url": "https://github.com/BepInEx/BepInEx/releases/latest/download/BepInEx_win_x64_5.4.23.5.zip"
 		},
 		{
-			"name": "BepInEx.MelonLoader.Loader",
-			"author": "BepInEx",
-			"version": "2.1.0",
-			"gitPath": "BepInEx/BepInEx.MelonLoader.Loader",
+			"name": "MelInEx",
+			"author": "Loafiat",
+			"version": "1.0.0",
+			"gitPath": "Loafiat/MelInEx",
 			"group": "Core",
 
-			"browser_download_url": "https://github.com/BepInEx/BepInEx.MelonLoader.Loader/releases/latest/download/MLLoader-UnityMono-BepInEx5-v0.5.7.zip"
+			"browser_download_url": "https://files.sirkingbinx.dev/melinex_bepinex.zip?raw=true"
 		},
 		{
 			"name": "BingusNametags++",
@@ -74,6 +74,15 @@
 			"group": "Core",
 
 			"browser_download_url": "https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip"
+		},
+		{
+			"name": "MelInEx",
+			"author": "Loafiat",
+			"version": "1.0.0",
+			"gitPath": "Loafiat/MelInEx",
+			"group": "Core",
+
+			"browser_download_url": "https://files.sirkingbinx.dev/melinex_ml.zip?raw=true"
 		},
 		{
 			"name": "BingusNametags++",
