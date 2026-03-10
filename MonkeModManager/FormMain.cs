@@ -4,20 +4,13 @@ using MonkeModManager.Internals.SimpleJSON;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Runtime.Remoting.Lifetime;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace MonkeModManager
 {
@@ -278,15 +271,11 @@ namespace MonkeModManager
 
         private void modLoaderBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Changing mod loaders will remove all files from the other mod loader, INCLUDING MODS AND SETTINGS! Are you sure?", 
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) != DialogResult.Yes)
+            if (MessageBox.Show("Please backup your mods so you can restore them in case the transition fails.",
+                    this.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
             {
-                modLoaderBox.Text = modLoaderBox.Text == "BepInEx" ? "MelonLoader" : "BepInEx";
-                return;
+                backupMods();
             }
-            
-            CleanModLoaderFiles();
-
             modLoaderAutoDetectBox.Checked = false;
             autoDetectedLabel.Visible = false;
 
@@ -445,7 +434,7 @@ namespace MonkeModManager
             }
         }
 
-        private void buttonBackupMods_Click(object sender, EventArgs e)
+        private void backupMods()
         {
             var pluginsPath = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods");
 
@@ -476,7 +465,12 @@ namespace MonkeModManager
             }
         }
 
-        private void buttonRestoreMods_Click(object sender, EventArgs e)
+        private void buttonBackupMods_Click(object sender, EventArgs e)
+        {
+            backupMods();
+        }
+
+        private void restoreMods(bool bepinex = true)
         {
             using (var fileDialog = new OpenFileDialog())
             {
@@ -494,7 +488,7 @@ namespace MonkeModManager
                         return;
                     }
 
-                    var pluginsPath = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods");
+                    var pluginsPath = Path.Combine(InstallDirectory, bepinex ? @"BepInEx\plugins" : "Mods");
                     try
                     {
                         UpdateStatus("Restoring mods...");
@@ -502,7 +496,7 @@ namespace MonkeModManager
                         {
                             foreach (var entry in archive.Entries)
                             {
-                                var directory = Path.Combine(InstallDirectory, @"BepInEx\plugins",
+                                var directory = Path.Combine(InstallDirectory, bepinex ? @"BepInEx\plugins" : "Mods",
                                     Path.GetDirectoryName(entry.FullName));
                                 if (!Directory.Exists(directory))
                                 {
@@ -522,6 +516,11 @@ namespace MonkeModManager
                     }
                 }
             }
+        }
+
+        private void buttonRestoreMods_Click(object sender, EventArgs e)
+        {
+            restoreMods(true);
         }
 
         #region Folders
@@ -952,5 +951,10 @@ namespace MonkeModManager
             InstallMod("MelInEx");
 
         #endregion
+
+        private void restoreMelonLoaderButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
