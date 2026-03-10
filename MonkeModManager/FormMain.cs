@@ -44,13 +44,14 @@ namespace MonkeModManager
             releases = new List<ReleaseInfo>();
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             labelVersion.Text = "MonkeModManager v" + version.Substring(0, version.Length - 2);
+
             new Thread(() =>
             {
                 AutoDetectModLoader();
                 LoadRequiredPlugins();
             }).Start();
         }
-
+         
         #region ReleaseHandling
 
         private void LoadReleases()
@@ -133,7 +134,6 @@ namespace MonkeModManager
 
         private void LoadRequiredPlugins()
         {
-            CheckVersion();
             UpdateStatus("Getting latest version info...");
             LoadReleases();
             this.Invoke((MethodInvoker)(() =>
@@ -666,25 +666,6 @@ namespace MonkeModManager
                         Process.GetCurrentProcess().Kill();
                     }
                 }
-            }
-        }
-
-        private void CheckVersion()
-        {
-            UpdateStatus("Checking for updates...");
-            Int16 version =
-                Convert.ToInt16(
-                    DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/master/update.txt"));
-            if (version > CurrentVersion)
-            {
-                this.Invoke((MethodInvoker)(() =>
-                {
-                    MessageBox.Show("Your version of the mod installer is outdated! Please download the new one!",
-                        "Update available!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    Process.Start("https://github.com/sirkingbinx/MonkeModManager/releases/latest");
-                    Process.GetCurrentProcess().Kill();
-                    Environment.Exit(0);
-                }));
             }
         }
 
