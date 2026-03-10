@@ -60,6 +60,11 @@
             this.buttonBackupMods = new System.Windows.Forms.Button();
             this.buttonUninstallAll = new System.Windows.Forms.Button();
             this.buttonModInfo = new System.Windows.Forms.Button();
+            this.Loader = new System.Windows.Forms.TabPage();
+            this.modLoaderBox = new System.Windows.Forms.ComboBox();
+            this.modLoaderAutoDetectBox = new System.Windows.Forms.CheckBox();
+            this.modLoaderInfoText = new System.Windows.Forms.Label();
+            this.autoDetectedLabel = new System.Windows.Forms.Label();
             this.tabControlMain.SuspendLayout();
             this.Plugins.SuspendLayout();
             this.contextMenuStripMain.SuspendLayout();
@@ -67,6 +72,7 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.Loader.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxDirectory
@@ -128,6 +134,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlMain.Controls.Add(this.Plugins);
             this.tabControlMain.Controls.Add(this.Utilities);
+            this.tabControlMain.Controls.Add(this.Loader);
             this.tabControlMain.Enabled = false;
             this.tabControlMain.Location = new System.Drawing.Point(10, 53);
             this.tabControlMain.Name = "tabControlMain";
@@ -214,7 +221,7 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.installMelonLoaderMod);
             this.groupBox2.Controls.Add(this.installBepModButton);
-            this.groupBox2.Location = new System.Drawing.Point(14, 130);
+            this.groupBox2.Location = new System.Drawing.Point(18, 23);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(146, 83);
             this.groupBox2.TabIndex = 8;
@@ -345,7 +352,7 @@
             // 
             // installMLModButton
             // 
-            this.installMLModButton.Location = new System.Drawing.Point(14, 101);
+            this.installMLModButton.Location = new System.Drawing.Point(25, 175);
             this.installMLModButton.Name = "installMLModButton";
             this.installMLModButton.Size = new System.Drawing.Size(132, 23);
             this.installMLModButton.TabIndex = 3;
@@ -355,7 +362,7 @@
             // 
             // buttonBackupMods
             // 
-            this.buttonBackupMods.Location = new System.Drawing.Point(14, 72);
+            this.buttonBackupMods.Location = new System.Drawing.Point(25, 146);
             this.buttonBackupMods.Name = "buttonBackupMods";
             this.buttonBackupMods.Size = new System.Drawing.Size(132, 23);
             this.buttonBackupMods.TabIndex = 1;
@@ -365,7 +372,7 @@
             // 
             // buttonUninstallAll
             // 
-            this.buttonUninstallAll.Location = new System.Drawing.Point(14, 43);
+            this.buttonUninstallAll.Location = new System.Drawing.Point(25, 117);
             this.buttonUninstallAll.Name = "buttonUninstallAll";
             this.buttonUninstallAll.Size = new System.Drawing.Size(132, 23);
             this.buttonUninstallAll.TabIndex = 0;
@@ -384,6 +391,61 @@
             this.buttonModInfo.Text = "View Mod Info";
             this.buttonModInfo.UseVisualStyleBackColor = true;
             this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
+            // 
+            // Loader
+            // 
+            this.Loader.Controls.Add(this.autoDetectedLabel);
+            this.Loader.Controls.Add(this.modLoaderInfoText);
+            this.Loader.Controls.Add(this.modLoaderAutoDetectBox);
+            this.Loader.Controls.Add(this.modLoaderBox);
+            this.Loader.Location = new System.Drawing.Point(4, 22);
+            this.Loader.Name = "Loader";
+            this.Loader.Size = new System.Drawing.Size(536, 256);
+            this.Loader.TabIndex = 2;
+            this.Loader.Text = "Loader";
+            this.Loader.UseVisualStyleBackColor = true;
+            // 
+            // modLoaderBox
+            // 
+            this.modLoaderBox.DisplayMember = "0";
+            this.modLoaderBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.modLoaderBox.FormattingEnabled = true;
+            this.modLoaderBox.Items.AddRange(new object[] {
+            "BepInEx",
+            "MelonLoader"});
+            this.modLoaderBox.Location = new System.Drawing.Point(14, 13);
+            this.modLoaderBox.Name = "modLoaderBox";
+            this.modLoaderBox.Size = new System.Drawing.Size(416, 21);
+            this.modLoaderBox.TabIndex = 0;
+            this.modLoaderBox.SelectionChangeCommitted += new System.EventHandler(this.modLoaderBox_SelectionChangeCommitted);
+            // 
+            // modLoaderAutoDetectBox
+            // 
+            this.modLoaderAutoDetectBox.AutoSize = true;
+            this.modLoaderAutoDetectBox.Location = new System.Drawing.Point(14, 50);
+            this.modLoaderAutoDetectBox.Name = "modLoaderAutoDetectBox";
+            this.modLoaderAutoDetectBox.Size = new System.Drawing.Size(153, 17);
+            this.modLoaderAutoDetectBox.TabIndex = 1;
+            this.modLoaderAutoDetectBox.Text = "Auto-Detect Mod Loader";
+            this.modLoaderAutoDetectBox.UseVisualStyleBackColor = true;
+            // 
+            // modLoaderInfoText
+            // 
+            this.modLoaderInfoText.Location = new System.Drawing.Point(11, 149);
+            this.modLoaderInfoText.Name = "modLoaderInfoText";
+            this.modLoaderInfoText.Size = new System.Drawing.Size(511, 92);
+            this.modLoaderInfoText.TabIndex = 2;
+            this.modLoaderInfoText.Text = resources.GetString("modLoaderInfoText.Text");
+            // 
+            // autoDetectedLabel
+            // 
+            this.autoDetectedLabel.AutoSize = true;
+            this.autoDetectedLabel.Location = new System.Drawing.Point(436, 16);
+            this.autoDetectedLabel.Name = "autoDetectedLabel";
+            this.autoDetectedLabel.Size = new System.Drawing.Size(86, 13);
+            this.autoDetectedLabel.TabIndex = 3;
+            this.autoDetectedLabel.Text = "(auto-detected)";
+            this.autoDetectedLabel.Visible = false;
             // 
             // FormMain
             // 
@@ -413,6 +475,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.Loader.ResumeLayout(false);
+            this.Loader.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -450,6 +514,11 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button installMelonLoaderMod;
+        private System.Windows.Forms.TabPage Loader;
+        private System.Windows.Forms.CheckBox modLoaderAutoDetectBox;
+        private System.Windows.Forms.ComboBox modLoaderBox;
+        private System.Windows.Forms.Label modLoaderInfoText;
+        private System.Windows.Forms.Label autoDetectedLabel;
     }
 }
 

@@ -31,8 +31,8 @@ namespace MonkeModManager.Internals
             MelonLoader = _whereML != null;
             MLInstallPath = _whereML;
 
-            //if (MelonLoader)
-               // Dependencies.Add("BepInEx.MelonLoader.Loader");
+            if (MelonLoader)
+                Dependencies.Add("BepInEx.MelonLoader.Loader");
 
             if (dependencies == null) return;
             for (int i = 0; i < dependencies.Count; i++)
