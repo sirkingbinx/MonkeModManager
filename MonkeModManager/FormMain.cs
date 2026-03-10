@@ -740,7 +740,7 @@ namespace MonkeModManager
         private void modLoaderAutoDetectBox_CheckedChanged(object sender, EventArgs e)
         {
             Registry.SetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "AutoDetectLoader",
-                modLoaderAutoDetectBox.Visible);
+                modLoaderAutoDetectBox.Visible ? "True" : "False");
         }
 
         #endregion // Helpers
@@ -911,7 +911,7 @@ namespace MonkeModManager
         {
             modLoaderAutoDetectBox.Checked =
                 (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "AutoDetectLoader",
-                    true) == "True";
+                    "True") == "True";
             modLoaderBox.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "Loader", "BepInEx");
 
             listOtherLoaderMods = modLoaderBox.Text == "BepInEx"
