@@ -117,16 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="modLoaderInfoText.Text" xml:space="preserve">
-    <value>The mod loader is the system in-charge of injecting mods into Gorilla Tag.
-
-BepInEx is the traditional and default choice as it has been the default mod loader for the
-Gorilla Tag Modding Group since 2021.
-
-MelonLoader is a substitute for BepInEx that hasn't been used as long, but promises better
-performance in comparsion to BepInEx.
-</value>
-  </data>
   <metadata name="contextMenuStripMain.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -374,6 +364,16 @@ performance in comparsion to BepInEx.
         /QL3lWDG1sWjaEHaG1Qw8hlakPo64W/5M4xrE2obhWLQ2LJ4JPcXBqM8Qq0YSF7vv7DwMxjlGZjjy4IP
         wjrgTUEYjHIOTAmnD36M4A8Y2ypK7LU4dVBTXvtnMK4lbCkcQdiWHT/lYwwGg8FgMBgMBoPBYDAYDAaD
         wWAwGAwGg8FgMBgMBoPBYDAYDAaDwWAwGAwGg8FgMBjWxv8DPpS0y5F36s8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="modLoaderInfoText.Text" xml:space="preserve">
+    <value>The mod loader is the system in-charge of injecting mods into Gorilla Tag.
+
+BepInEx is the traditional and default choice as it has been the default mod loader for the
+Gorilla Tag Modding Group since 2021.
+
+MelonLoader is a substitute for BepInEx that hasn't been used as long, but promises better
+performance in comparsion to BepInEx.
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

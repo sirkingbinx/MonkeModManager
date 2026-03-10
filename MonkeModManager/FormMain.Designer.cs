@@ -59,12 +59,12 @@
             this.installMLModButton = new System.Windows.Forms.Button();
             this.buttonBackupMods = new System.Windows.Forms.Button();
             this.buttonUninstallAll = new System.Windows.Forms.Button();
-            this.buttonModInfo = new System.Windows.Forms.Button();
             this.Loader = new System.Windows.Forms.TabPage();
-            this.modLoaderBox = new System.Windows.Forms.ComboBox();
-            this.modLoaderAutoDetectBox = new System.Windows.Forms.CheckBox();
-            this.modLoaderInfoText = new System.Windows.Forms.Label();
             this.autoDetectedLabel = new System.Windows.Forms.Label();
+            this.modLoaderInfoText = new System.Windows.Forms.Label();
+            this.modLoaderAutoDetectBox = new System.Windows.Forms.CheckBox();
+            this.modLoaderBox = new System.Windows.Forms.ComboBox();
+            this.buttonModInfo = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.Plugins.SuspendLayout();
             this.contextMenuStripMain.SuspendLayout();
@@ -380,18 +380,6 @@
             this.buttonUninstallAll.UseVisualStyleBackColor = true;
             this.buttonUninstallAll.Click += new System.EventHandler(this.buttonUninstallAll_Click);
             // 
-            // buttonModInfo
-            // 
-            this.buttonModInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonModInfo.Enabled = false;
-            this.buttonModInfo.Location = new System.Drawing.Point(322, 341);
-            this.buttonModInfo.Name = "buttonModInfo";
-            this.buttonModInfo.Size = new System.Drawing.Size(112, 23);
-            this.buttonModInfo.TabIndex = 9;
-            this.buttonModInfo.Text = "View Mod Info";
-            this.buttonModInfo.UseVisualStyleBackColor = true;
-            this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
-            // 
             // Loader
             // 
             this.Loader.Controls.Add(this.autoDetectedLabel);
@@ -404,6 +392,35 @@
             this.Loader.TabIndex = 2;
             this.Loader.Text = "Loader";
             this.Loader.UseVisualStyleBackColor = true;
+            // 
+            // autoDetectedLabel
+            // 
+            this.autoDetectedLabel.AutoSize = true;
+            this.autoDetectedLabel.Location = new System.Drawing.Point(436, 16);
+            this.autoDetectedLabel.Name = "autoDetectedLabel";
+            this.autoDetectedLabel.Size = new System.Drawing.Size(86, 13);
+            this.autoDetectedLabel.TabIndex = 3;
+            this.autoDetectedLabel.Text = "(auto-detected)";
+            this.autoDetectedLabel.Visible = false;
+            // 
+            // modLoaderInfoText
+            // 
+            this.modLoaderInfoText.Location = new System.Drawing.Point(11, 149);
+            this.modLoaderInfoText.Name = "modLoaderInfoText";
+            this.modLoaderInfoText.Size = new System.Drawing.Size(511, 92);
+            this.modLoaderInfoText.TabIndex = 2;
+            this.modLoaderInfoText.Text = resources.GetString("modLoaderInfoText.Text");
+            // 
+            // modLoaderAutoDetectBox
+            // 
+            this.modLoaderAutoDetectBox.AutoSize = true;
+            this.modLoaderAutoDetectBox.Location = new System.Drawing.Point(14, 50);
+            this.modLoaderAutoDetectBox.Name = "modLoaderAutoDetectBox";
+            this.modLoaderAutoDetectBox.Size = new System.Drawing.Size(153, 17);
+            this.modLoaderAutoDetectBox.TabIndex = 1;
+            this.modLoaderAutoDetectBox.Text = "Auto-Detect Mod Loader";
+            this.modLoaderAutoDetectBox.UseVisualStyleBackColor = true;
+            this.modLoaderAutoDetectBox.CheckedChanged += new System.EventHandler(this.modLoaderAutoDetectBox_CheckedChanged);
             // 
             // modLoaderBox
             // 
@@ -419,33 +436,17 @@
             this.modLoaderBox.TabIndex = 0;
             this.modLoaderBox.SelectionChangeCommitted += new System.EventHandler(this.modLoaderBox_SelectionChangeCommitted);
             // 
-            // modLoaderAutoDetectBox
+            // buttonModInfo
             // 
-            this.modLoaderAutoDetectBox.AutoSize = true;
-            this.modLoaderAutoDetectBox.Location = new System.Drawing.Point(14, 50);
-            this.modLoaderAutoDetectBox.Name = "modLoaderAutoDetectBox";
-            this.modLoaderAutoDetectBox.Size = new System.Drawing.Size(153, 17);
-            this.modLoaderAutoDetectBox.TabIndex = 1;
-            this.modLoaderAutoDetectBox.Text = "Auto-Detect Mod Loader";
-            this.modLoaderAutoDetectBox.UseVisualStyleBackColor = true;
-            // 
-            // modLoaderInfoText
-            // 
-            this.modLoaderInfoText.Location = new System.Drawing.Point(11, 149);
-            this.modLoaderInfoText.Name = "modLoaderInfoText";
-            this.modLoaderInfoText.Size = new System.Drawing.Size(511, 92);
-            this.modLoaderInfoText.TabIndex = 2;
-            this.modLoaderInfoText.Text = resources.GetString("modLoaderInfoText.Text");
-            // 
-            // autoDetectedLabel
-            // 
-            this.autoDetectedLabel.AutoSize = true;
-            this.autoDetectedLabel.Location = new System.Drawing.Point(436, 16);
-            this.autoDetectedLabel.Name = "autoDetectedLabel";
-            this.autoDetectedLabel.Size = new System.Drawing.Size(86, 13);
-            this.autoDetectedLabel.TabIndex = 3;
-            this.autoDetectedLabel.Text = "(auto-detected)";
-            this.autoDetectedLabel.Visible = false;
+            this.buttonModInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonModInfo.Enabled = false;
+            this.buttonModInfo.Location = new System.Drawing.Point(322, 341);
+            this.buttonModInfo.Name = "buttonModInfo";
+            this.buttonModInfo.Size = new System.Drawing.Size(112, 23);
+            this.buttonModInfo.TabIndex = 9;
+            this.buttonModInfo.Text = "View Mod Info";
+            this.buttonModInfo.UseVisualStyleBackColor = true;
+            this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
             // 
             // FormMain
             // 

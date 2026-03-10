@@ -16,6 +16,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace MonkeModManager
 {
@@ -55,15 +56,19 @@ namespace MonkeModManager
 
         private void LoadReleases()
         {
-            var decoded = JSON.Parse(DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/refs/heads/master/mods.json"));
-            
+            var decoded =
+                JSON.Parse(DownloadSite(
+                    "https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/refs/heads/master/mods.json"));
+
             var allMods = decoded[modLoaderBox.Text == "BepInEx" ? "mods" : "melonloader_mods"].AsArray;
             var allGroups = decoded["groups"].AsArray;
 
             for (int i = 0; i < allMods.Count; i++)
             {
                 JSONNode current = allMods[i];
-                ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["gitPath"], current["version"], current["group"], current["browser_download_url"], current["melonLoaderType"], current["dependencies"].AsArray);
+                ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["gitPath"],
+                    current["version"], current["group"], current["browser_download_url"], current["melonLoaderType"],
+                    current["dependencies"].AsArray);
                 releases.Add(release);
             }
 
@@ -95,8 +100,9 @@ namespace MonkeModManager
             UpdateStatus("Getting latest version info...");
             LoadReleases();
             this.Invoke((MethodInvoker)(() =>
-            {//Invoke so we can call from current thread
-             //Update checkbox's text
+            {
+                //Invoke so we can call from current thread
+                //Update checkbox's text
                 Dictionary<string, int> includedGroups = new Dictionary<string, int>();
 
                 for (int i = 0; i < groups.Count(); i++)
@@ -117,6 +123,7 @@ namespace MonkeModManager
                     {
                         listViewMods.Items.Add(item);
                     }
+
                     CheckDefaultMod(release, item);
 
                     if (release.Group == null || !groups.ContainsKey(release.Group))
@@ -130,8 +137,8 @@ namespace MonkeModManager
                     }
                     else
                     {
-                        //int index = listViewMods.Groups.Add(new ListViewGroup(release.Group, HorizontalAlignment.Left));
-                        //item.Group = listViewMods.Groups[index];
+                        int index = listViewMods.Groups.Add(new ListViewGroup(release.Group, HorizontalAlignment.Left));
+                        item.Group = listViewMods.Groups[index];
                     }
                 }
 
@@ -139,11 +146,11 @@ namespace MonkeModManager
                 buttonInstall.Enabled = true;
 
             }));
-           
+
             UpdateStatus("Release info updated!");
         }
 
-#endregion // ReleaseHandling
+        #endregion // ReleaseHandling
 
         #region Installation
 
@@ -151,10 +158,10 @@ namespace MonkeModManager
         {
             ChangeInstallButtonState(false);
             UpdateStatus("Starting install sequence...");
-            
+
             foreach (var n in releases.Where(r => r.Install).Select(r => r.Name))
                 InstallMod(n);
-            
+
             UpdateStatus("Install complete!");
             ChangeInstallButtonState(true);
         }
@@ -169,15 +176,26 @@ namespace MonkeModManager
             string fileName = Path.GetFileName(release.Link);
             if (Path.GetExtension(fileName).Equals(".dll"))
             {
-                var pluginsPath = Path.Combine(InstallDirectory, release.MelonLoader ? $"MLLoader\\{release.MLInstallPath}" : @"BepInEx\plugins");
-                if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
-                string dir = Path.Combine(pluginsPath, Regex.Replace(release.Name, @"\s+", string.Empty));
+                string dir;
+                if (modLoaderBox.Text == "BepInEx")
+                {
+                    var pluginsPath = Path.Combine(InstallDirectory,
+                        release.MelonLoader ? $"MLLoader\\{release.MLInstallPath}" : @"BepInEx\plugins");
+                    if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
+                    dir = Path.Combine(pluginsPath, Regex.Replace(release.Name, @"\s+", string.Empty));
+                }
+                else
+                {
+                    var pluginsPath = Path.Combine(InstallDirectory, "Mods");
+                    if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
+                    dir = Path.Combine(pluginsPath);
+                }
 
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
                 File.WriteAllBytes(Path.Combine(dir, fileName), file);
 
-                var dllFile = Path.Combine(InstallDirectory, @"BepInEx\plugins", fileName);
+                var dllFile = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods", fileName);
                 if (File.Exists(dllFile))
                 {
                     File.Delete(dllFile);
@@ -187,6 +205,7 @@ namespace MonkeModManager
             {
                 UnzipFile(file, InstallDirectory);
             }
+
             UpdateStatus(string.Format("Installed {0}!", release.Name));
         }
 
@@ -196,20 +215,35 @@ namespace MonkeModManager
 
         private void buttonInstall_Click(object sender, EventArgs e)
         {
-            new Thread(() =>
-            {
-                Install();
-            }).Start();
+            new Thread(Install).Start();
         }
 
         private void modLoaderBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Changing mod loaders will remove all files from the other mod loader, INCLUDING MODS AND SETTINGS! Are you sure?", 
+                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) != DialogResult.Yes)
+            {
+                modLoaderBox.Text = modLoaderBox.Text == "BepInEx" ? "MelonLoader" : "BepInEx";
+                return;
+            }
+            
+            CleanModLoaderFiles();
+
             modLoaderAutoDetectBox.Checked = false;
             autoDetectedLabel.Visible = false;
 
             listViewMods.Items.Clear();
+            listViewMods.Groups.Clear();
 
-            LoadReleases();
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "Loader", modLoaderBox.Text);
+
+            LoadRequiredPlugins();
+            InstallMod(modLoaderBox.Text);
+
+            UpdateStatus("Restarting..");
+
+            Application.Restart();
+            Environment.Exit(0);
         }
 
         private void buttonFolderBrowser_Click(object sender, EventArgs e)
@@ -226,10 +260,13 @@ namespace MonkeModManager
                     {
                         InstallDirectory = Path.GetDirectoryName(path);
                         textBoxDirectory.Text = InstallDirectory;
+                        SetSavedLocation(InstallDirectory);
+                        AutoDetectModLoader();
                     }
                     else
                     {
-                        MessageBox.Show("That's not Gorilla Tag.exe! please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("That's not Gorilla Tag.exe! please try again!", "Error!", MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
 
                 }
@@ -279,11 +316,15 @@ namespace MonkeModManager
                 }
             }
 
-            if (release.Name == "BepInEx") { e.Item.Checked = true; }
+            if (release.Name == modLoaderBox.Text)
+            {
+                e.Item.Checked = true;
+            }
+
             release.Install = e.Item.Checked;
         }
 
-         private void listViewMods_DoubleClick(object sender, EventArgs e)
+        private void listViewMods_DoubleClick(object sender, EventArgs e)
         {
             OpenLinkFromRelease();
         }
@@ -294,9 +335,9 @@ namespace MonkeModManager
         }
 
         private void viewInfoToolStripMenuItem_Click(object sender, EventArgs e)
-         {
-             OpenLinkFromRelease();
-         }
+        {
+            OpenLinkFromRelease();
+        }
 
         private void listViewMods_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
@@ -321,7 +362,7 @@ namespace MonkeModManager
             {
                 UpdateStatus("Uninstalling all mods");
 
-                var pluginsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins");
+                var pluginsPath = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods");
 
                 try
                 {
@@ -348,7 +389,7 @@ namespace MonkeModManager
 
         private void buttonBackupMods_Click(object sender, EventArgs e)
         {
-            var pluginsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins");
+            var pluginsPath = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods");
 
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
@@ -372,44 +413,8 @@ namespace MonkeModManager
                     UpdateStatus("Failed to back up mods.");
                     return;
                 }
+
                 UpdateStatus("Successfully backed up mods!");
-            }
-        }
-
-        private void buttonBackupCosmetics_Click(object sender, EventArgs e)
-        {
-            var pluginsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins");
-
-            SaveFileDialog saveFileDialog = new SaveFileDialog
-            {
-                InitialDirectory = InstallDirectory,
-                FileName = $"Cosmetics Backup",
-                Filter = "ZIP Folder (.zip)|*.zip",
-                Title = "Save Cosmetics Backup"
-            };
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK && saveFileDialog.FileName != "")
-            {
-                UpdateStatus("Backing up cosmetics...");
-                if (File.Exists(saveFileDialog.FileName)) File.Delete(saveFileDialog.FileName);
-                try
-                {
-                    ZipFile.CreateFromDirectory(Path.Combine(pluginsPath, @"GorillaCosmetics\Hats"), saveFileDialog.FileName, CompressionLevel.Optimal, true);
-                    using (ZipArchive archive = ZipFile.Open(saveFileDialog.FileName, ZipArchiveMode.Update))
-                    {
-                        foreach (var f in Directory.GetFiles(Path.Combine(pluginsPath, @"GorillaCosmetics\Materials")))
-                        {
-                            archive.CreateEntryFromFile(f, $"{Path.Combine("Materials", Path.GetFileName(f))}");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    UpdateStatus("Failed to restore cosmetics.");
-                    return;
-                }
-                UpdateStatus("Backed up cosmetics!");
             }
         }
 
@@ -423,13 +428,15 @@ namespace MonkeModManager
                 fileDialog.FilterIndex = 1;
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    if (!Path.GetExtension(fileDialog.FileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
+                    if (!Path.GetExtension(fileDialog.FileName)
+                            .Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
                     {
                         MessageBox.Show("Invalid file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         UpdateStatus("Failed to restore mods.");
                         return;
                     }
-                    var pluginsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins");
+
+                    var pluginsPath = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods");
                     try
                     {
                         UpdateStatus("Restoring mods...");
@@ -437,7 +444,8 @@ namespace MonkeModManager
                         {
                             foreach (var entry in archive.Entries)
                             {
-                                var directory = Path.Combine(InstallDirectory, @"BepInEx\plugins", Path.GetDirectoryName(entry.FullName));
+                                var directory = Path.Combine(InstallDirectory, @"BepInEx\plugins",
+                                    Path.GetDirectoryName(entry.FullName));
                                 if (!Directory.Exists(directory))
                                 {
                                     Directory.CreateDirectory(directory);
@@ -446,56 +454,13 @@ namespace MonkeModManager
                                 entry.ExtractToFile(Path.Combine(pluginsPath, entry.FullName), true);
                             }
                         }
+
                         UpdateStatus("Successfully restored mods!");
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         UpdateStatus("Failed to restore mods.");
-                    }
-                }
-            }
-        }
-
-        private void buttonRestoreCosmetics_Click(object sender, EventArgs e)
-        {
-            using (var fileDialog = new OpenFileDialog())
-            {
-                fileDialog.InitialDirectory = InstallDirectory;
-                fileDialog.FileName = "Cosmetics Backup.zip";
-                fileDialog.Filter = "ZIP Folder (.zip)|*.zip";
-                fileDialog.FilterIndex = 1;
-                if (fileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (!Path.GetExtension(fileDialog.FileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        MessageBox.Show("Invalid file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        UpdateStatus("Failed to restore co0smetics.");
-                        return;
-                    }
-                    var cosmeticsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins\GorillaCosmetics");
-                    try
-                    {
-                        UpdateStatus("Restoring cosmetics...");
-                        using (var archive = ZipFile.OpenRead(fileDialog.FileName))
-                        {
-                            foreach (var entry in archive.Entries)
-                            {
-                                var directory = Path.Combine(InstallDirectory, @"BepInEx\plugins\GorillaCosmetics", Path.GetDirectoryName(entry.FullName));
-                                if (!Directory.Exists(directory))
-                                {
-                                    Directory.CreateDirectory(directory);
-                                }
-
-                                entry.ExtractToFile(Path.Combine(cosmeticsPath, entry.FullName), true);
-                            }
-                        }
-                        UpdateStatus("Successfully restored cosmetics!");
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        UpdateStatus("Failed to restore cosmetics.");
                     }
                 }
             }
@@ -511,13 +476,29 @@ namespace MonkeModManager
 
         private void buttonOpenConfigFolder_Click(object sender, EventArgs e)
         {
-            var configDirectory = Path.Combine(InstallDirectory, @"BepInEx\config");
-            if (Directory.Exists(configDirectory))
-                Process.Start(configDirectory);
+            var bepConfig = Path.Combine(InstallDirectory, @"BepInEx\config");
+            var melonConfig = Path.Combine(InstallDirectory, @"UserData");
+
+            if (modLoaderBox.Text == "BepInEx" && Directory.Exists(bepConfig))
+                Process.Start(bepConfig);
+            else if (modLoaderBox.Text == "MelonLoader" && Directory.Exists(melonConfig))
+                Process.Start(melonConfig);
+            else
+                MessageBox.Show(
+                    $"You must install and run {modLoaderBox.Text} before opening the config folder.",
+                    "Missing Config Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void buttonOpenBepInExFolder_Click(object sender, EventArgs e)
         {
+            if (modLoaderBox.Text != "BepInEx")
+            {
+                MessageBox.Show(
+                    $"You're using {modLoaderBox.Text}.",
+                    "Missing BepInEx", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             var BepInExDirectory = Path.Combine(InstallDirectory, "BepInEx");
             if (Directory.Exists(BepInExDirectory))
                 Process.Start(BepInExDirectory);
@@ -547,10 +528,23 @@ namespace MonkeModManager
 
         private void mlFolder_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Path.Combine(InstallDirectory, "MLLoader")))
-                InstallMod("BepInEx.MelonLoader.Loader");
+            if (modLoaderBox.Text == "MelonLoader" && Directory.Exists(Path.Combine(InstallDirectory, "MelonLoader")))
+            {
+                Process.Start(Path.Combine(InstallDirectory, "MelonLoader"));
+                return;
+            }
+            if (modLoaderBox.Text == "BepInEx")
+            {
+                if (!Directory.Exists(Path.Combine(InstallDirectory, "MLLoader")))
+                {
+                    MessageBox.Show(
+                        "Please install the MelonLoader to BepInEx compatability layer (BepInEx.MelonLoader.Loader.)",
+                        "Missing Compatability Layer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-            Process.Start(Path.Combine(InstallDirectory, "MLLoader"));
+                Process.Start(Path.Combine(InstallDirectory, "MLLoader"));
+            }
         }
 
         #endregion // UIEvents
@@ -558,11 +552,16 @@ namespace MonkeModManager
         #region Helpers
 
         private CookieContainer PermCookie;
+
         private string DownloadSite(string URL)
         {
             try
             {
-                if (PermCookie == null) { PermCookie = new CookieContainer(); }
+                if (PermCookie == null)
+                {
+                    PermCookie = new CookieContainer();
+                }
+
                 HttpWebRequest RQuest = (HttpWebRequest)HttpWebRequest.Create(URL);
                 RQuest.Method = "GET";
                 RQuest.KeepAlive = true;
@@ -582,12 +581,16 @@ namespace MonkeModManager
             {
                 if (ex.Message.Contains("403"))
                 {
-                    MessageBox.Show("Failed to update version info, GitHub has rate limited you, please check back in 15 - 30 minutes", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(
+                        "Failed to update version info, GitHub has rate limited you, please check back in 15 - 30 minutes",
+                        this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show("Failed to update version info, please check your internet connection", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to update version info, please check your internet connection", this.Text,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
                 Process.GetCurrentProcess().Kill();
                 return null;
             }
@@ -615,11 +618,12 @@ namespace MonkeModManager
         {
             string formattedText = string.Format("Status: {0}", status);
             this.Invoke((MethodInvoker)(() =>
-            { //Invoke so we can call from any thread
+            {
+                //Invoke so we can call from any thread
                 labelStatus.Text = formattedText;
             }));
         }
-  
+
         private void NotFoundHandler()
         {
             bool found = false;
@@ -643,7 +647,8 @@ namespace MonkeModManager
                         }
                         else
                         {
-                            MessageBox.Show("That's not Gorilla Tag.exe! please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("That's not Gorilla Tag.exe! please try again!", "Error!",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
@@ -657,12 +662,15 @@ namespace MonkeModManager
         private void CheckVersion()
         {
             UpdateStatus("Checking for updates...");
-            Int16 version = Convert.ToInt16(DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/master/update.txt"));
+            Int16 version =
+                Convert.ToInt16(
+                    DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/master/update.txt"));
             if (version > CurrentVersion)
             {
                 this.Invoke((MethodInvoker)(() =>
                 {
-                    MessageBox.Show("Your version of the mod installer is outdated! Please download the new one!", "Update available!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Your version of the mod installer is outdated! Please download the new one!",
+                        "Update available!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     Process.Start("https://github.com/sirkingbinx/MonkeModManager/releases/latest");
                     Process.GetCurrentProcess().Kill();
                     Environment.Exit(0);
@@ -673,9 +681,9 @@ namespace MonkeModManager
         private void ChangeInstallButtonState(bool enabled)
         {
             this.Invoke((MethodInvoker)(() =>
-                {
-                    buttonInstall.Enabled = enabled;
-                }));
+            {
+                buttonInstall.Enabled = enabled;
+            }));
         }
 
         private void OpenLinkFromRelease()
@@ -686,10 +694,16 @@ namespace MonkeModManager
                 UpdateStatus($"Opening GitHub page for {release.Name}");
                 Process.Start(string.Format("https://github.com/{0}", release.GitPath));
             }
-            
+
         }
 
-#endregion // Helpers
+        private void modLoaderAutoDetectBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "AutoDetectLoader",
+                modLoaderAutoDetectBox.Visible);
+        }
+
+        #endregion // Helpers
 
         #region Registry
 
@@ -712,20 +726,27 @@ namespace MonkeModManager
 
             ShowErrorFindingDirectoryMessage();
         }
+
         private void ShowErrorFindingDirectoryMessage()
         {
-            MessageBox.Show("We couldn't seem to find your Gorilla Tag installation, please press \"OK\" and point us to it", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(
+                "We couldn't seem to find your Gorilla Tag installation, please press \"OK\" and point us to it",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             NotFoundHandler();
             this.TopMost = true;
         }
+
         private string GetSteamLocation()
         {
-            return (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 1533390", @"InstallLocation", "");
+            return (string)Registry.GetValue(
+                @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 1533390",
+                @"InstallLocation", "");
         }
 
         private string GetSavedLocation()
         {
-            return (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", @"InstallPath", "");
+            return (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", @"InstallPath",
+                "");
         }
 
         private void SetSavedLocation(string path)
@@ -745,6 +766,7 @@ namespace MonkeModManager
                 release.Install = false;
             }
         }
+
         #endregion // Registry
 
         #region InstallHelpers
@@ -767,7 +789,10 @@ namespace MonkeModManager
 
                 var pluginsPath = Path.Combine(InstallDirectory, isBepInEx ? @"BepInEx\plugins" : @"MLLoader\Mods");
                 if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
-                string dir = Path.Combine(pluginsPath, isBepInEx ? Regex.Replace(Path.GetFileNameWithoutExtension(friendlyName), @"\s+", string.Empty) : "");
+                string dir = Path.Combine(pluginsPath,
+                    isBepInEx
+                        ? Regex.Replace(Path.GetFileNameWithoutExtension(friendlyName), @"\s+", string.Empty)
+                        : "");
 
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
@@ -780,15 +805,57 @@ namespace MonkeModManager
                 }
             }
         }
+
         #endregion
 
         #region ModLoader Utils
 
+        public struct ModFolder
+        {
+            public string name;
+            public bool dir;
+        }
+
+        public static ModFolder[] BepInExData = new ModFolder[]
+        {
+            new ModFolder{name="BepInEx", dir=true},
+            new ModFolder{name="MLLoader", dir=true},
+            new ModFolder{name=".doorstop_version", dir=false},
+            new ModFolder{name="changelog.txt", dir=false},
+            new ModFolder{name="doorstop_config.ini", dir=false},
+            new ModFolder{name="winhttp.dll", dir=false},
+        };
+
+        public static ModFolder[] MelonLoaderData = new ModFolder[]
+        {
+            new ModFolder{name="MelonLoader", dir=true},
+            new ModFolder{name="UserData", dir=true},
+            new ModFolder{name="UserLibs", dir=true},
+            new ModFolder{name="Plugins", dir=true},
+            new ModFolder{name="Mods", dir=true},
+            new ModFolder{name="version.dll", dir=false},
+        };
+
+        public void CleanModLoaderFiles()
+        {
+            // cleanup files if you are transitioning from another mod loader
+            var cleanStuff = modLoaderBox.Text == "MelonLoader" ? BepInExData : MelonLoaderData;
+
+            foreach (var data in cleanStuff)
+            {
+                var p = Path.Combine(InstallDirectory, data.name);
+                if (data.dir && Directory.Exists(p))
+                    Directory.Delete(p, true);
+                else if (File.Exists(p))
+                    File.Delete(p);
+            }
+        }
+
         private void AutoDetectModLoader()
         {
             modLoaderAutoDetectBox.Checked =
-                (bool)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "AutoDetectLoader",
-                    true);
+                (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "AutoDetectLoader",
+                    true) == "True";
             modLoaderBox.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "Loader", "BepInEx");
 
             if (!modLoaderAutoDetectBox.Checked)
