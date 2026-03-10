@@ -65,6 +65,27 @@
 		}
 	],
 
+	"melonloader_mods": [
+		{
+			"name": "MelonLoader",
+			"author": "Lava Gang",
+			"version": "0.7.2",
+			"gitPath": "LavaGang/MelonLoader",
+			"group": "Core",
+
+			"browser_download_url": "https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip"
+		},
+		{
+			"name": "BingusNametags++",
+			"author": "bingus",
+			"version": "1.4.0",
+			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
+			"group": "Cosmetic",
+
+			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.MelonLoader.zip"
+		}
+	],
+
 	"groups": [
 		{
 			"name" : "Core",
