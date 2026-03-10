@@ -245,12 +245,6 @@ namespace MonkeModManager
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
                 File.WriteAllBytes(Path.Combine(dir, fileName), file);
-
-                var dllFile = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods", fileName);
-                if (File.Exists(dllFile))
-                {
-                    File.Delete(dllFile);
-                }
             }
             else
             {
@@ -899,7 +893,7 @@ namespace MonkeModManager
             foreach (var data in cleanStuff)
             {
                 var p = Path.Combine(InstallDirectory, data.name);
-                if (modLoaderBox.Text == "BepInEx" && data.dir && Directory.Exists(p))
+                if (data.dir && Directory.Exists(p))
                     Directory.Delete(p, true);
                 else if (File.Exists(p))
                     File.Delete(p);

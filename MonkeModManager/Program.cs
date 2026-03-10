@@ -16,8 +16,10 @@ namespace MonkeModManager
         [STAThread]
         static void Main()
         {
-            var newVer = DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/refs/heads/master/update.txt");
-            newVer = newVer.Substring(0, newVer.Length - 1);
+            var newVer =
+                DownloadSite("https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/refs/heads/master/update.txt")
+                    .Trim()
+                    .Replace("\n", String.Empty);
             var vStr = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             vStr = vStr.Substring(0, vStr.Length - 2);
             if (newVer != vStr)
