@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting.Lifetime;
@@ -42,20 +43,20 @@ namespace MonkeModManager
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             releases = new List<ReleaseInfo>();
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            labelVersion.Text = "Monke Mod Manager v" + version.Substring(0, version.Length - 2);
+            labelVersion.Text = "MonkeModManager v" + version.Substring(0, version.Length - 2);
             new Thread(() =>
             {
                 AutoDetectModLoader();
                 LoadRequiredPlugins();
             }).Start();
-
-
         }
 
         #region ReleaseHandling
 
         private void LoadReleases()
         {
+            listViewMods.Items.Clear();
+
             var decoded =
                 JSON.Parse(DownloadSite(
                     "https://raw.githubusercontent.com/sirkingbinx/MonkeModManager/refs/heads/master/mods.json"));
@@ -94,6 +95,42 @@ namespace MonkeModManager
             //WriteReleasesToDisk();
         }
 
+        private void RenderModList()
+        {
+            listViewMods.Items.Clear();
+
+            foreach (ReleaseInfo release in releases)
+            {
+                if (searchBarText.Text != "" && !release.Name.ToLower().Contains(searchBarText.Text.ToLower()))
+                    continue;
+
+                ListViewItem item = new ListViewItem();
+                item.Text = release.Name;
+                item.Text = $"{release.Name} - {release.Version}";
+                item.SubItems.Add(release.Author);
+                item.Tag = release;
+                
+                listViewMods.Items.Add(item);
+
+                CheckDefaultMod(release, item);
+
+                if (release.Group == null || !groups.ContainsKey(release.Group))
+                {
+                    item.Group = listViewMods.Groups[groups["Uncategorized"]];
+                }
+                else if (groups.ContainsKey(release.Group))
+                {
+                    int index = groups[release.Group];
+                    item.Group = listViewMods.Groups[index];
+                }
+                else
+                {
+                    int index = listViewMods.Groups.Add(new ListViewGroup(release.Group, HorizontalAlignment.Left));
+                    item.Group = listViewMods.Groups[index];
+                }
+            }
+        }
+
         private void LoadRequiredPlugins()
         {
             CheckVersion();
@@ -112,35 +149,7 @@ namespace MonkeModManager
                     groups[key] = value;
                 }
 
-                foreach (ReleaseInfo release in releases)
-                {
-                    ListViewItem item = new ListViewItem();
-                    item.Text = release.Name;
-                    if (!String.IsNullOrEmpty(release.Version)) item.Text = $"{release.Name} - {release.Version}";
-                    item.SubItems.Add(release.Author);
-                    item.Tag = release;
-                    if (release.Install)
-                    {
-                        listViewMods.Items.Add(item);
-                    }
-
-                    CheckDefaultMod(release, item);
-
-                    if (release.Group == null || !groups.ContainsKey(release.Group))
-                    {
-                        item.Group = listViewMods.Groups[groups["Uncategorized"]];
-                    }
-                    else if (groups.ContainsKey(release.Group))
-                    {
-                        int index = groups[release.Group];
-                        item.Group = listViewMods.Groups[index];
-                    }
-                    else
-                    {
-                        int index = listViewMods.Groups.Add(new ListViewGroup(release.Group, HorizontalAlignment.Left));
-                        item.Group = listViewMods.Groups[index];
-                    }
-                }
+                RenderModList();
 
                 tabControlMain.Enabled = true;
                 buttonInstall.Enabled = true;
@@ -516,14 +525,9 @@ namespace MonkeModManager
             Process.Start("https://discord.gg/monkemod");
         }
 
-        private void installBepModButton_Click(object sender, EventArgs e)
+        private void installModButton_Click(object sender, EventArgs e)
         {
             installModFromSystem(true);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            installModFromSystem(false);
         }
 
         private void mlFolder_Click(object sender, EventArgs e)
@@ -546,6 +550,12 @@ namespace MonkeModManager
                 Process.Start(Path.Combine(InstallDirectory, "MLLoader"));
             }
         }
+
+        private void installMelonLoaderModButton_Click(object sender, EventArgs e) =>
+            installModFromSystem(false);
+
+        private void searchBarText_TextChanged(object sender, EventArgs e) =>
+            RenderModList();
 
         #endregion // UIEvents
 
@@ -771,7 +781,7 @@ namespace MonkeModManager
 
         #region InstallHelpers
 
-        private void installModFromSystem(bool isBepInEx = true)
+        private void installModFromSystem(bool isBepInEx)
         {
             using (var fileDialog = new OpenFileDialog())
             {
@@ -781,15 +791,33 @@ namespace MonkeModManager
                 if (fileDialog.ShowDialog() != DialogResult.OK)
                     return;
 
+                string relPluginsPath = "";
+
+                if (isBepInEx && modLoaderBox.Text == "BepInEx")
+                {
+                    relPluginsPath = @"BepInEx\plugins";
+                } else if (isBepInEx && modLoaderBox.Text == "MelonLoader")
+                {
+                    // compatability layer goes here (later)
+                    MessageBox.Show("You are trying to install a BepInEx mod while using the MelonLoader mod loader. Switch to the BepInEx loader or find a version of this mod that is BepInEx compatable.", "Loader Type Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (!isBepInEx && modLoaderBox.Text == "BepInEx")
+                {
                     InstallMod("BepInEx.MelonLoader.Loader");
+                    relPluginsPath = @"MLPlugins\Mods";
+                } else if (!isBepInEx && modLoaderBox.Text == "MelonLoader")
+                {
+                    relPluginsPath = @"Mods";
+                }
 
                 var path = fileDialog.FileName;
                 var friendlyName = fileDialog.SafeFileName ?? path;
 
-                var pluginsPath = Path.Combine(InstallDirectory, isBepInEx ? @"BepInEx\plugins" : @"MLLoader\Mods");
+                var pluginsPath = Path.Combine(InstallDirectory, relPluginsPath);
                 if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
-                string dir = Path.Combine(pluginsPath,
+                var dir = Path.Combine(pluginsPath,
                     isBepInEx
                         ? Regex.Replace(Path.GetFileNameWithoutExtension(friendlyName), @"\s+", string.Empty)
                         : "");
@@ -798,11 +826,10 @@ namespace MonkeModManager
 
                 File.WriteAllBytes(Path.Combine(dir, friendlyName), File.ReadAllBytes(path));
 
-                var dllFile = Path.Combine(InstallDirectory, @"BepInEx\plugins", friendlyName);
+                var dllFile = Path.Combine(InstallDirectory, relPluginsPath, friendlyName);
+                
                 if (File.Exists(dllFile))
-                {
                     File.Delete(dllFile);
-                }
             }
         }
 

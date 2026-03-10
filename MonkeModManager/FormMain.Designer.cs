@@ -37,6 +37,8 @@
             this.labelStatus = new System.Windows.Forms.Label();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.Plugins = new System.Windows.Forms.TabPage();
+            this.searchBarText = new System.Windows.Forms.TextBox();
+            this.searchBarLabel = new System.Windows.Forms.Label();
             this.listViewMods = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -45,8 +47,7 @@
             this.Utilities = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.installMelonLoaderMod = new System.Windows.Forms.Button();
-            this.installBepModButton = new System.Windows.Forms.Button();
+            this.installBepInExModButton = new System.Windows.Forms.Button();
             this.labelVersion = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonDiscordLink = new System.Windows.Forms.Button();
@@ -65,6 +66,7 @@
             this.modLoaderAutoDetectBox = new System.Windows.Forms.CheckBox();
             this.modLoaderBox = new System.Windows.Forms.ComboBox();
             this.buttonModInfo = new System.Windows.Forms.Button();
+            this.installMelonLoaderModButton = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.Plugins.SuspendLayout();
             this.contextMenuStripMain.SuspendLayout();
@@ -144,6 +146,8 @@
             // 
             // Plugins
             // 
+            this.Plugins.Controls.Add(this.searchBarText);
+            this.Plugins.Controls.Add(this.searchBarLabel);
             this.Plugins.Controls.Add(this.listViewMods);
             this.Plugins.Location = new System.Drawing.Point(4, 22);
             this.Plugins.Name = "Plugins";
@@ -152,6 +156,23 @@
             this.Plugins.TabIndex = 0;
             this.Plugins.Text = "Plugins";
             this.Plugins.UseVisualStyleBackColor = true;
+            // 
+            // searchBarText
+            // 
+            this.searchBarText.Location = new System.Drawing.Point(56, 7);
+            this.searchBarText.Name = "searchBarText";
+            this.searchBarText.Size = new System.Drawing.Size(474, 22);
+            this.searchBarText.TabIndex = 2;
+            this.searchBarText.TextChanged += new System.EventHandler(this.searchBarText_TextChanged);
+            // 
+            // searchBarLabel
+            // 
+            this.searchBarLabel.AutoSize = true;
+            this.searchBarLabel.Location = new System.Drawing.Point(6, 10);
+            this.searchBarLabel.Name = "searchBarLabel";
+            this.searchBarLabel.Size = new System.Drawing.Size(44, 13);
+            this.searchBarLabel.TabIndex = 1;
+            this.searchBarLabel.Text = "Search:";
             // 
             // listViewMods
             // 
@@ -165,9 +186,9 @@
             this.listViewMods.ContextMenuStrip = this.contextMenuStripMain;
             this.listViewMods.FullRowSelect = true;
             this.listViewMods.HideSelection = false;
-            this.listViewMods.Location = new System.Drawing.Point(6, 6);
+            this.listViewMods.Location = new System.Drawing.Point(6, 33);
             this.listViewMods.Name = "listViewMods";
-            this.listViewMods.Size = new System.Drawing.Size(524, 244);
+            this.listViewMods.Size = new System.Drawing.Size(524, 217);
             this.listViewMods.TabIndex = 0;
             this.listViewMods.UseCompatibleStateImageBehavior = false;
             this.listViewMods.View = System.Windows.Forms.View.Details;
@@ -218,54 +239,43 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.installMelonLoaderModButton);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.installMelonLoaderMod);
-            this.groupBox2.Controls.Add(this.installBepModButton);
-            this.groupBox2.Location = new System.Drawing.Point(18, 23);
+            this.groupBox2.Controls.Add(this.installBepInExModButton);
+            this.groupBox2.Location = new System.Drawing.Point(18, 16);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(146, 83);
+            this.groupBox2.Size = new System.Drawing.Size(146, 90);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 12);
+            this.label2.Location = new System.Drawing.Point(45, 14);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Install Mod";
+            this.label2.Text = "Installers";
             // 
-            // installMelonLoaderMod
+            // installBepInExModButton
             // 
-            this.installMelonLoaderMod.Location = new System.Drawing.Point(8, 53);
-            this.installMelonLoaderMod.Name = "installMelonLoaderMod";
-            this.installMelonLoaderMod.Size = new System.Drawing.Size(132, 23);
-            this.installMelonLoaderMod.TabIndex = 13;
-            this.installMelonLoaderMod.Text = "MelonLoader Mod";
-            this.installMelonLoaderMod.UseVisualStyleBackColor = true;
-            this.installMelonLoaderMod.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // installBepModButton
-            // 
-            this.installBepModButton.Location = new System.Drawing.Point(6, 28);
-            this.installBepModButton.Name = "installBepModButton";
-            this.installBepModButton.Size = new System.Drawing.Size(132, 23);
-            this.installBepModButton.TabIndex = 12;
-            this.installBepModButton.Text = "BepInEx Mod";
-            this.installBepModButton.UseVisualStyleBackColor = true;
-            this.installBepModButton.Click += new System.EventHandler(this.installBepModButton_Click);
+            this.installBepInExModButton.Location = new System.Drawing.Point(6, 31);
+            this.installBepInExModButton.Name = "installBepInExModButton";
+            this.installBepInExModButton.Size = new System.Drawing.Size(132, 23);
+            this.installBepInExModButton.TabIndex = 12;
+            this.installBepInExModButton.Text = "BepInEx Mod";
+            this.installBepInExModButton.UseVisualStyleBackColor = true;
+            this.installBepInExModButton.Click += new System.EventHandler(this.installModButton_Click);
             // 
             // labelVersion
             // 
             this.labelVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.labelVersion.AutoSize = true;
-            this.labelVersion.Location = new System.Drawing.Point(188, 209);
+            this.labelVersion.Location = new System.Drawing.Point(170, 209);
             this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Size = new System.Drawing.Size(119, 13);
+            this.labelVersion.Size = new System.Drawing.Size(186, 17);
             this.labelVersion.TabIndex = 11;
-            this.labelVersion.Text = "Monke Mod Manager";
-            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.labelVersion.Text = "MonkeModManager v1.2.3";
+            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelVersion.UseMnemonic = false;
             // 
             // pictureBox1
@@ -352,7 +362,7 @@
             // 
             // installMLModButton
             // 
-            this.installMLModButton.Location = new System.Drawing.Point(25, 175);
+            this.installMLModButton.Location = new System.Drawing.Point(24, 179);
             this.installMLModButton.Name = "installMLModButton";
             this.installMLModButton.Size = new System.Drawing.Size(132, 23);
             this.installMLModButton.TabIndex = 3;
@@ -362,7 +372,7 @@
             // 
             // buttonBackupMods
             // 
-            this.buttonBackupMods.Location = new System.Drawing.Point(25, 146);
+            this.buttonBackupMods.Location = new System.Drawing.Point(24, 150);
             this.buttonBackupMods.Name = "buttonBackupMods";
             this.buttonBackupMods.Size = new System.Drawing.Size(132, 23);
             this.buttonBackupMods.TabIndex = 1;
@@ -372,7 +382,7 @@
             // 
             // buttonUninstallAll
             // 
-            this.buttonUninstallAll.Location = new System.Drawing.Point(25, 117);
+            this.buttonUninstallAll.Location = new System.Drawing.Point(24, 121);
             this.buttonUninstallAll.Name = "buttonUninstallAll";
             this.buttonUninstallAll.Size = new System.Drawing.Size(132, 23);
             this.buttonUninstallAll.TabIndex = 0;
@@ -448,6 +458,16 @@
             this.buttonModInfo.UseVisualStyleBackColor = true;
             this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
             // 
+            // installMelonLoaderModButton
+            // 
+            this.installMelonLoaderModButton.Location = new System.Drawing.Point(6, 60);
+            this.installMelonLoaderModButton.Name = "installMelonLoaderModButton";
+            this.installMelonLoaderModButton.Size = new System.Drawing.Size(132, 23);
+            this.installMelonLoaderModButton.TabIndex = 13;
+            this.installMelonLoaderModButton.Text = "MelonLoader Mod";
+            this.installMelonLoaderModButton.UseVisualStyleBackColor = true;
+            this.installMelonLoaderModButton.Click += new System.EventHandler(this.installMelonLoaderModButton_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -468,9 +488,9 @@
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.tabControlMain.ResumeLayout(false);
             this.Plugins.ResumeLayout(false);
+            this.Plugins.PerformLayout();
             this.contextMenuStripMain.ResumeLayout(false);
             this.Utilities.ResumeLayout(false);
-            this.Utilities.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -510,16 +530,18 @@
         private System.Windows.Forms.Button buttonDiscordLink;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label labelVersion;
-        private System.Windows.Forms.Button installBepModButton;
+        private System.Windows.Forms.Button installBepInExModButton;
         private System.Windows.Forms.Button mlFolder;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button installMelonLoaderMod;
         private System.Windows.Forms.TabPage Loader;
         private System.Windows.Forms.CheckBox modLoaderAutoDetectBox;
         private System.Windows.Forms.ComboBox modLoaderBox;
         private System.Windows.Forms.Label modLoaderInfoText;
         private System.Windows.Forms.Label autoDetectedLabel;
+        private System.Windows.Forms.Label searchBarLabel;
+        private System.Windows.Forms.TextBox searchBarText;
+        private System.Windows.Forms.Button installMelonLoaderModButton;
     }
 }
 
