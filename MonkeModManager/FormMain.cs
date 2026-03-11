@@ -565,15 +565,15 @@ namespace MonkeModManager
             }
             if (modLoaderBox.Text == "BepInEx")
             {
-                if (!Directory.Exists(Path.Combine(InstallDirectory, "MLLoader")))
+                if (!Directory.Exists(Path.Combine(InstallDirectory, @"BepInEx\MelonLoader")))
                 {
                     MessageBox.Show(
-                        "Please install the MelonLoader to BepInEx compatability layer (BepInEx.MelonLoader.Loader.)",
+                        "Please install the MelonLoader to BepInEx compatability layer (MelInEx.)",
                         "Missing Compatability Layer", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                Process.Start(Path.Combine(InstallDirectory, "MLLoader"));
+                Process.Start(Path.Combine(InstallDirectory, "BepInEx\\MelonLoader"));
             }
         }
 
