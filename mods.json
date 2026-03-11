@@ -151,6 +151,16 @@
 			"browser_download_url": "https://github.com/developer9998/GorillaInfoWatch/releases/latest/download/GorillaInfoWatch.dll"
 		},
 		{
+			"name": "MonkeModPanel",
+			"author": "Estatic",
+			"version": "1.0.3",
+			"gitPath": "Estati/MonkeModPanel",
+			"group": "Gameplay",
+			"dependencies": ["GorillaLibrary", "GorillaLibrary.GameModes"],
+
+			"browser_download_url": "https://github.com/Estati/MonkeModPanel/releases/latest/download/WristMenu.dll"
+		},
+		{
 			"name": "BingusNametags++",
 			"author": "bingus",
 			"version": "1.4.0",
