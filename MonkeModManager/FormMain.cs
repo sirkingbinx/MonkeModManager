@@ -60,7 +60,7 @@ namespace MonkeModManager
 
             if (!listOtherLoaderMods)
             {
-                allMods = decoded[modLoaderBox.Text == "BepInEx" ? "mods" : "melonloader_mods"].AsArray;
+                allMods = decoded[IsBepInEx() ? "mods" : "melonloader_mods"].AsArray;
             }
             else
             {
@@ -69,15 +69,15 @@ namespace MonkeModManager
                 var allMLMods = decoded["melonloader_mods"].AsArray;
 
                 allMods = new JSONArray();
-                var safeTable = modLoaderBox.Text == "BepInEx" ? allBepMods : allMLMods;
-                var movingTable = modLoaderBox.Text == "BepInEx" ? allMLMods : allBepMods;
+                var safeTable = IsBepInEx() ? allBepMods : allMLMods;
+                var movingTable = IsBepInEx() ? allMLMods : allBepMods;
 
                 allMods = safeTable;
                 foreach (var item in movingTable)
                 {
-                    if (modLoaderBox.Text == "BepInEx" && item.Value["name"] == "MelonLoader")
+                    if (IsBepInEx() && item.Value["name"] == "MelonLoader")
                         continue;
-                    if (modLoaderBox.Text == "MelonLoader" && item.Value["name"] == "BepInEx")
+                    if (!IsBepInEx() && item.Value["name"] == "BepInEx")
                         continue;
                     if (item.Value["name"] == "MelInEx")
                         continue;
@@ -223,21 +223,10 @@ namespace MonkeModManager
             string fileName = Path.GetFileName(release.Link);
             if (Path.GetExtension(fileName).Equals(".dll"))
             {
-                string dir;
-                if (!release.MelInEx)
-                {
-                    if (modLoaderBox.Text == "BepInEx")
-                        dir = Path.Combine(@"BepInEx\plugins", Regex.Replace(release.Name, @"\s+", string.Empty));
-                    else
-                        dir = Path.Combine(InstallDirectory, "Mods");
-                }
-                else
-                {
-                    if (modLoaderBox.Text == "BepInEx")
-                        dir = Path.Combine(InstallDirectory, @"BepInEx\MelonLoader\Mods");
-                    else
-                        dir = Path.Combine(InstallDirectory, @"BepInEx\plugins");
-                }
+                string dir = GetPluginsPath(release.MelInEx);
+
+                if (dir.EndsWith(@"BepInEx\plugins"))
+                    dir += $"\\{release.Name}";
 
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
                 dir = Path.Combine(dir);
@@ -261,6 +250,11 @@ namespace MonkeModManager
         private void buttonInstall_Click(object sender, EventArgs e)
         {
             new Thread(Install).Start();
+        }
+
+        private void restoreMelonLoaderButton_Click(object sender, EventArgs e)
+        {
+            restoreMods(false);
         }
 
         private void modLoaderBox_SelectionChangeCommitted(object sender, EventArgs e)
@@ -309,9 +303,7 @@ namespace MonkeModManager
                         MessageBox.Show("That's not Gorilla Tag.exe! please try again!", "Error!", MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                     }
-
                 }
-
             }
         }
 
@@ -382,14 +374,7 @@ namespace MonkeModManager
 
         private void listViewMods_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            if (listViewMods.SelectedItems.Count > 0)
-            {
-                buttonModInfo.Enabled = true;
-            }
-            else
-            {
-                buttonModInfo.Enabled = false;
-            }
+            buttonModInfo.Enabled = (listViewMods.SelectedItems.Count > 0);
         }
 
         private void buttonUninstallAll_Click(object sender, EventArgs e)
@@ -403,7 +388,7 @@ namespace MonkeModManager
             {
                 UpdateStatus("Uninstalling all mods");
 
-                var pluginsPath = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods");
+                var pluginsPath = GetPluginsPath();
 
                 try
                 {
@@ -430,7 +415,7 @@ namespace MonkeModManager
 
         private void backupMods()
         {
-            var pluginsPath = Path.Combine(InstallDirectory, modLoaderBox.Text == "BepInEx" ? @"BepInEx\plugins" : "Mods");
+            var pluginsPath = GetPluginsPath();
 
             SaveFileDialog saveFileDialog = new SaveFileDialog
             {
@@ -482,7 +467,7 @@ namespace MonkeModManager
                         return;
                     }
 
-                    var pluginsPath = Path.Combine(InstallDirectory, bepinex ? @"BepInEx\plugins" : "Mods");
+                    var pluginsPath = GetPluginsPath();
                     try
                     {
                         UpdateStatus("Restoring mods...");
@@ -490,8 +475,7 @@ namespace MonkeModManager
                         {
                             foreach (var entry in archive.Entries)
                             {
-                                var directory = Path.Combine(InstallDirectory, bepinex ? @"BepInEx\plugins" : "Mods",
-                                    Path.GetDirectoryName(entry.FullName));
+                                var directory = Path.Combine(GetPluginsPath(), Path.GetDirectoryName(entry.FullName));
                                 if (!Directory.Exists(directory))
                                 {
                                     Directory.CreateDirectory(directory);
@@ -661,7 +645,7 @@ namespace MonkeModManager
 
         private byte[] DownloadFile(string url)
         {
-            WebClient client = new WebClient();
+            var client = new WebClient();
             client.Proxy = null;
             return client.DownloadData(url);
         }
@@ -814,30 +798,15 @@ namespace MonkeModManager
                 if (fileDialog.ShowDialog() != DialogResult.OK)
                     return;
 
-                string relPluginsPath = "";
+                var crossLoaded = isBepInEx != (modLoaderBox.Text == "BepInEx");
 
-                if (isBepInEx && modLoaderBox.Text == "BepInEx")
-                {
-                    relPluginsPath = @"BepInEx\plugins";
-                } else if (isBepInEx && modLoaderBox.Text == "MelonLoader")
-                {
+                var pluginsPath = GetPluginsPath(crossLoaded);
+                if (crossLoaded)
                     InstallMelInEx();
-                    relPluginsPath = @"BepInEx\plugins";
-                }
-
-                if (!isBepInEx && modLoaderBox.Text == "BepInEx")
-                {
-                    InstallMelInEx();
-                    relPluginsPath = @"BepInEx\MelonLoader\Mods";
-                } else if (!isBepInEx && modLoaderBox.Text == "MelonLoader")
-                {
-                    relPluginsPath = @"Mods";
-                }
-
+                
                 var path = fileDialog.FileName;
                 var friendlyName = fileDialog.SafeFileName ?? path;
 
-                var pluginsPath = Path.Combine(InstallDirectory, relPluginsPath);
                 if (!Directory.Exists(pluginsPath)) Directory.CreateDirectory(pluginsPath);
                 var dir = Path.Combine(pluginsPath,
                     isBepInEx
@@ -847,11 +816,6 @@ namespace MonkeModManager
                 if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
 
                 File.WriteAllBytes(Path.Combine(dir, friendlyName), File.ReadAllBytes(path));
-
-                var dllFile = Path.Combine(InstallDirectory, relPluginsPath, friendlyName);
-                
-                if (File.Exists(dllFile))
-                    File.Delete(dllFile);
             }
         }
 
@@ -900,6 +864,25 @@ namespace MonkeModManager
             }
         }
 
+        private string GetPluginsPath(bool crossLoadedMod = false)
+        {
+            var bepInEx = (modLoaderBox.Text == "BepInEx");
+
+            if (bepInEx && !crossLoadedMod)
+                return Path.Combine(InstallDirectory, @"BepInEx\plugins");
+            if (bepInEx)
+                return Path.Combine(InstallDirectory, @"BepInEx\MelonLoader\Mods");
+            if (!crossLoadedMod)
+                return Path.Combine(InstallDirectory, @"Mods");
+
+            return Path.Combine(InstallDirectory, @"BepInEx\plugins");
+        }
+
+        private bool IsBepInEx()
+        {
+            return modLoaderBox.Text == "BepInEx";
+        }
+
         private void AutoDetectModLoader()
         {
             modLoaderAutoDetectBox.Checked =
@@ -945,10 +928,5 @@ namespace MonkeModManager
             InstallMod("MelInEx");
 
         #endregion
-
-        private void restoreMelonLoaderButton_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
