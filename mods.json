@@ -158,7 +158,7 @@
 			"group": "Gameplay",
 			"dependencies": ["GorillaLibrary", "GorillaLibrary.GameModes"],
 
-			"browser_download_url": "https://github.com/Estati/MonkeModPanel/releases/download/2/WristMenu.dll"
+			"browser_download_url": "https://github.com/Estati/MonkeModPanel/releases/latest/download/WristMenu.dll"
 		},
 		{
 			"name": "BingusNametags++",
