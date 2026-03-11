@@ -25,7 +25,7 @@
 			"gitPath": "Loafiat/MelInEx",
 			"group": "Core",
 
-			"browser_download_url": "https://files.sirkingbinx.dev/melinex_bepinex.zip?raw=true"
+			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx/melinex_bepinex.zip?raw=true"
 		},
 		{
 			"name": "BingusNametags++",
@@ -101,7 +101,7 @@
 			"gitPath": "Loafiat/MelInEx",
 			"group": "Core",
 
-			"browser_download_url": "https://files.sirkingbinx.dev/melinex_ml.zip?raw=true"
+			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx/melinex_ml.zip?raw=true"
 		},
 		{
 			"name": "GorillaLibrary",
@@ -159,6 +159,16 @@
 			"dependencies": ["GorillaLibrary", "GorillaLibrary.GameModes"],
 
 			"browser_download_url": "https://github.com/Estati/MonkeModPanel/releases/latest/download/WristMenu.dll"
+		},
+		{
+			"name": "PCUtils",
+			"author": "baggZ",
+			"version": "1.1.0",
+			"gitPath": "baggZ-idk/PCUtils",
+			"group": "Utilities",
+			"dependencies": ["GorillaLibrary", "GorillaLibrary.GameModes"]
+
+			"browser_download_url": "https://github.com/baggZ-idk/PCUtils/releases/latest/download/PCUtils.dll"
 		},
 		{
 			"name": "BingusNametags++",
