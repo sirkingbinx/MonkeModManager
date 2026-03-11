@@ -161,6 +161,16 @@
 			"browser_download_url": "https://github.com/Estati/MonkeModPanel/releases/latest/download/WristMenu.dll"
 		},
 		{
+			"name": "PCUtils",
+			"author": "baggZ",
+			"version": "1.1.0",
+			"gitPath": "baggZ-idk/PCUtils",
+			"group": "Utilities",
+			"dependencies": ["GorillaLibrary", "GorillaLibrary.GameModes"]
+
+			"browser_download_url": "https://github.com/baggZ-idk/PCUtils/releases/latest/download/PCUtils.dll"
+		},
+		{
 			"name": "BingusNametags++",
 			"author": "bingus",
 			"version": "1.4.0",
