@@ -259,13 +259,12 @@ namespace MonkeModManager
 
         private void modLoaderBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Please backup your mods so you can restore them in case the transition fails.",
-                    this.Name, MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
-            {
-                backupMods();
-            }
             modLoaderAutoDetectBox.Checked = false;
             autoDetectedLabel.Visible = false;
+
+            UpdateStatus("Clearing mod loader files..");
+
+            CleanModLoaderFiles();
 
             listViewMods.Items.Clear();
             listViewMods.Groups.Clear();
@@ -565,7 +564,7 @@ namespace MonkeModManager
             }
             if (modLoaderBox.Text == "BepInEx")
             {
-                if (!Directory.Exists(Path.Combine(InstallDirectory, @"BepInEx\MelonLoader")))
+                if (!Directory.Exists(Path.Combine(InstallDirectory, @"MelonLoader")))
                 {
                     MessageBox.Show(
                         "Please install the MelonLoader to BepInEx compatability layer (MelInEx.)",
@@ -573,7 +572,7 @@ namespace MonkeModManager
                     return;
                 }
 
-                Process.Start(Path.Combine(InstallDirectory, "BepInEx\\MelonLoader"));
+                Process.Start(Path.Combine(InstallDirectory, "MelonLoader"));
             }
         }
 
@@ -831,7 +830,6 @@ namespace MonkeModManager
 
         public static ModFolder[] BepInExData = new ModFolder[]
         {
-            new ModFolder{name="BepInEx", dir=true},
             new ModFolder{name="MLLoader", dir=true},
             new ModFolder{name=".doorstop_version", dir=false},
             new ModFolder{name="changelog.txt", dir=false},
@@ -841,11 +839,6 @@ namespace MonkeModManager
 
         public static ModFolder[] MelonLoaderData = new ModFolder[]
         {
-            new ModFolder{name="MelonLoader", dir=true},
-            new ModFolder{name="UserData", dir=true},
-            new ModFolder{name="UserLibs", dir=true},
-            new ModFolder{name="Plugins", dir=true},
-            new ModFolder{name="Mods", dir=true},
             new ModFolder{name="version.dll", dir=false},
         };
 
