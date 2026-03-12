@@ -871,7 +871,7 @@ namespace MonkeModManager
             if (bepInEx && !crossLoadedMod)
                 return Path.Combine(InstallDirectory, @"BepInEx\plugins");
             if (bepInEx)
-                return Path.Combine(InstallDirectory, @"BepInEx\MelonLoader\Mods");
+                return Path.Combine(InstallDirectory, @"Mods");
             if (!crossLoadedMod)
                 return Path.Combine(InstallDirectory, @"Mods");
 
@@ -891,7 +891,7 @@ namespace MonkeModManager
             modLoaderBox.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "Loader", "BepInEx");
 
             listOtherLoaderMods = modLoaderBox.Text == "BepInEx"
-                ? File.Exists(Path.Combine(InstallDirectory, @"BepInEx\plugins\MelInEx\MelInEx.dll"))
+                ? File.Exists(Path.Combine(InstallDirectory, @"BepInEx\plugins\MelInEx.dll"))
                 : File.Exists(Path.Combine(InstallDirectory, @"Mods\MelInEx.dll"));
 
             if (!modLoaderAutoDetectBox.Checked)
@@ -901,7 +901,7 @@ namespace MonkeModManager
 
             // with complayer
             if (Directory.Exists(Path.Combine(InstallDirectory, "BepInEx")) &&
-                Directory.Exists(Path.Combine(InstallDirectory, "BepInEx", "MelonLoader")))
+                File.Exists(Path.Combine(InstallDirectory, "BepInEx", "plugins", "MelInEx.dll")))
                 bepinex = true;
 
             if (Directory.Exists(Path.Combine(InstallDirectory, "BepInEx")) &&
@@ -917,7 +917,7 @@ namespace MonkeModManager
                 bepinex = false;
 
             listOtherLoaderMods = bepinex
-                ? File.Exists(Path.Combine(InstallDirectory, @"BepInEx\plugins\MelInEx\MelInEx.dll"))
+                ? File.Exists(Path.Combine(InstallDirectory, @"BepInEx\plugins\MelInEx.dll"))
                 : File.Exists(Path.Combine(InstallDirectory, @"Mods\MelInEx.dll"));
 
             modLoaderBox.Text = bepinex ? "BepInEx" : "MelonLoader";
