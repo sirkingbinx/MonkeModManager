@@ -83,6 +83,23 @@
 			"dependencies": ["Utilla"],
 			"browser_download_url": "https://github.com/SakuraaDevelopment/Bark-v3/releases/latest/download/Bark.dll"
 		}
+		{
+			"name": "Several Bees",
+			"author": "Sev",
+			"version": "1.4.2",
+			"gitPath": "sevvy-wevvy/Several-Bees",
+			"group": "Libraries",
+			"browser_download_url": "https://github.com/sevvy-wevvy/Several-Bees/releases/latest/download/SeveralBees-Gtag.dll"
+		},
+		{
+			"name": "Gorilla Optimizer",
+			"author": "Sev",
+			"version": "1.1.0",
+			"gitPath": "sevvy-wevvy/Gorilla-Optimizer",
+			"group": "Tweaks",
+			"dependencies": ["Several Bees"],
+			"browser_download_url": "https://github.com/sevvy-wevvy/Gorilla-Optimizer/releases/latest/download/GorillaOptimizer.dll"
+		}
 	],
 
 	"melonloader_mods": [
