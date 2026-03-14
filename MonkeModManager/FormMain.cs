@@ -575,9 +575,9 @@ namespace MonkeModManager
 
         #region Helpers
 
-        private CookieContainer PermCookie;
+        public static CookieContainer PermCookie;
 
-        private string DownloadSite(string URL)
+        public static string DownloadSite(string URL)
         {
             try
             {
@@ -607,11 +607,11 @@ namespace MonkeModManager
                 {
                     MessageBox.Show(
                         "Failed to update version info, GitHub has rate limited you, please check back in 15 - 30 minutes",
-                        this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        "MonkeModManager", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show("Failed to update version info, please check your internet connection", this.Text,
+                    MessageBox.Show("Failed to update version info, please check your internet connection", "MonkeModManager",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
@@ -631,7 +631,7 @@ namespace MonkeModManager
             }
         }
 
-        private byte[] DownloadFile(string url)
+        public static byte[] DownloadFile(string url)
         {
             var client = new WebClient();
             client.Proxy = null;
