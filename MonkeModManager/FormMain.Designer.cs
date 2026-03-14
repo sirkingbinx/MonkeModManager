@@ -45,6 +45,14 @@
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.viewInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Utilities = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.buttonUninstallAll = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.restoreMelonLoaderButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonBackupMods = new System.Windows.Forms.Button();
+            this.restoreBepInExButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.installMelonLoaderModButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,30 +66,22 @@
             this.buttonOpenConfig = new System.Windows.Forms.Button();
             this.buttonOpenGameFolder = new System.Windows.Forms.Button();
             this.labelOpen = new System.Windows.Forms.Label();
-            this.restoreBepInExButton = new System.Windows.Forms.Button();
-            this.buttonBackupMods = new System.Windows.Forms.Button();
-            this.buttonUninstallAll = new System.Windows.Forms.Button();
             this.Loader = new System.Windows.Forms.TabPage();
             this.autoDetectedLabel = new System.Windows.Forms.Label();
             this.modLoaderInfoText = new System.Windows.Forms.Label();
             this.modLoaderAutoDetectBox = new System.Windows.Forms.CheckBox();
             this.modLoaderBox = new System.Windows.Forms.ComboBox();
             this.buttonModInfo = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.restoreMelonLoaderButton = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.tabControlMain.SuspendLayout();
             this.Plugins.SuspendLayout();
             this.contextMenuStripMain.SuspendLayout();
             this.Utilities.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.Loader.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxDirectory
@@ -243,6 +243,86 @@
             this.Utilities.Text = "Utilities";
             this.Utilities.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.buttonUninstallAll);
+            this.groupBox4.Location = new System.Drawing.Point(374, 164);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(151, 62);
+            this.groupBox4.TabIndex = 15;
+            this.groupBox4.TabStop = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(36, 12);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 13);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Danger Zone";
+            // 
+            // buttonUninstallAll
+            // 
+            this.buttonUninstallAll.Location = new System.Drawing.Point(6, 28);
+            this.buttonUninstallAll.Name = "buttonUninstallAll";
+            this.buttonUninstallAll.Size = new System.Drawing.Size(139, 23);
+            this.buttonUninstallAll.TabIndex = 0;
+            this.buttonUninstallAll.Text = "Uninstall All Mods";
+            this.buttonUninstallAll.UseVisualStyleBackColor = true;
+            this.buttonUninstallAll.Click += new System.EventHandler(this.buttonUninstallAll_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.restoreMelonLoaderButton);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.buttonBackupMods);
+            this.groupBox3.Controls.Add(this.restoreBepInExButton);
+            this.groupBox3.Location = new System.Drawing.Point(13, 104);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(151, 122);
+            this.groupBox3.TabIndex = 14;
+            this.groupBox3.TabStop = false;
+            // 
+            // restoreMelonLoaderButton
+            // 
+            this.restoreMelonLoaderButton.Location = new System.Drawing.Point(5, 93);
+            this.restoreMelonLoaderButton.Name = "restoreMelonLoaderButton";
+            this.restoreMelonLoaderButton.Size = new System.Drawing.Size(140, 23);
+            this.restoreMelonLoaderButton.TabIndex = 7;
+            this.restoreMelonLoaderButton.Text = "Restore to MelonLoader";
+            this.restoreMelonLoaderButton.UseVisualStyleBackColor = true;
+            this.restoreMelonLoaderButton.Click += new System.EventHandler(this.restoreMelonLoaderButton_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(25, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(94, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Backup / Restore";
+            // 
+            // buttonBackupMods
+            // 
+            this.buttonBackupMods.Location = new System.Drawing.Point(6, 35);
+            this.buttonBackupMods.Name = "buttonBackupMods";
+            this.buttonBackupMods.Size = new System.Drawing.Size(140, 23);
+            this.buttonBackupMods.TabIndex = 1;
+            this.buttonBackupMods.Text = "Backup Mods Folder";
+            this.buttonBackupMods.UseVisualStyleBackColor = true;
+            this.buttonBackupMods.Click += new System.EventHandler(this.buttonBackupMods_Click);
+            // 
+            // restoreBepInExButton
+            // 
+            this.restoreBepInExButton.Location = new System.Drawing.Point(5, 64);
+            this.restoreBepInExButton.Name = "restoreBepInExButton";
+            this.restoreBepInExButton.Size = new System.Drawing.Size(140, 23);
+            this.restoreBepInExButton.TabIndex = 3;
+            this.restoreBepInExButton.Text = "Restore to BepInEx";
+            this.restoreBepInExButton.UseVisualStyleBackColor = true;
+            this.restoreBepInExButton.Click += new System.EventHandler(this.buttonRestoreMods_Click);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.installMelonLoaderModButton);
@@ -376,36 +456,6 @@
             this.labelOpen.TabIndex = 6;
             this.labelOpen.Text = "Important Folders";
             // 
-            // restoreBepInExButton
-            // 
-            this.restoreBepInExButton.Location = new System.Drawing.Point(5, 64);
-            this.restoreBepInExButton.Name = "restoreBepInExButton";
-            this.restoreBepInExButton.Size = new System.Drawing.Size(140, 23);
-            this.restoreBepInExButton.TabIndex = 3;
-            this.restoreBepInExButton.Text = "Restore to BepInEx";
-            this.restoreBepInExButton.UseVisualStyleBackColor = true;
-            this.restoreBepInExButton.Click += new System.EventHandler(this.buttonRestoreMods_Click);
-            // 
-            // buttonBackupMods
-            // 
-            this.buttonBackupMods.Location = new System.Drawing.Point(6, 35);
-            this.buttonBackupMods.Name = "buttonBackupMods";
-            this.buttonBackupMods.Size = new System.Drawing.Size(140, 23);
-            this.buttonBackupMods.TabIndex = 1;
-            this.buttonBackupMods.Text = "Backup Mods Folder";
-            this.buttonBackupMods.UseVisualStyleBackColor = true;
-            this.buttonBackupMods.Click += new System.EventHandler(this.buttonBackupMods_Click);
-            // 
-            // buttonUninstallAll
-            // 
-            this.buttonUninstallAll.Location = new System.Drawing.Point(6, 28);
-            this.buttonUninstallAll.Name = "buttonUninstallAll";
-            this.buttonUninstallAll.Size = new System.Drawing.Size(139, 23);
-            this.buttonUninstallAll.TabIndex = 0;
-            this.buttonUninstallAll.Text = "Uninstall All Mods";
-            this.buttonUninstallAll.UseVisualStyleBackColor = true;
-            this.buttonUninstallAll.Click += new System.EventHandler(this.buttonUninstallAll_Click);
-            // 
             // Loader
             // 
             this.Loader.Controls.Add(this.autoDetectedLabel);
@@ -474,56 +524,6 @@
             this.buttonModInfo.UseVisualStyleBackColor = true;
             this.buttonModInfo.Click += new System.EventHandler(this.buttonModInfo_Click);
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.restoreMelonLoaderButton);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.buttonBackupMods);
-            this.groupBox3.Controls.Add(this.restoreBepInExButton);
-            this.groupBox3.Location = new System.Drawing.Point(13, 104);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(151, 122);
-            this.groupBox3.TabIndex = 14;
-            this.groupBox3.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 14);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Backup / Restore";
-            // 
-            // restoreMelonLoaderButton
-            // 
-            this.restoreMelonLoaderButton.Location = new System.Drawing.Point(5, 93);
-            this.restoreMelonLoaderButton.Name = "restoreMelonLoaderButton";
-            this.restoreMelonLoaderButton.Size = new System.Drawing.Size(140, 23);
-            this.restoreMelonLoaderButton.TabIndex = 7;
-            this.restoreMelonLoaderButton.Text = "Restore to MelonLoader";
-            this.restoreMelonLoaderButton.UseVisualStyleBackColor = true;
-            this.restoreMelonLoaderButton.Click += new System.EventHandler(this.restoreMelonLoaderButton_Click);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label4);
-            this.groupBox4.Controls.Add(this.buttonUninstallAll);
-            this.groupBox4.Location = new System.Drawing.Point(374, 164);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(151, 62);
-            this.groupBox4.TabIndex = 15;
-            this.groupBox4.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(36, 12);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Danger Zone";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -539,14 +539,17 @@
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Monke Mod Manager";
+            this.Text = "MonkeModManager";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.tabControlMain.ResumeLayout(false);
             this.Plugins.ResumeLayout(false);
             this.Plugins.PerformLayout();
             this.contextMenuStripMain.ResumeLayout(false);
             this.Utilities.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -554,10 +557,6 @@
             this.groupBox1.PerformLayout();
             this.Loader.ResumeLayout(false);
             this.Loader.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

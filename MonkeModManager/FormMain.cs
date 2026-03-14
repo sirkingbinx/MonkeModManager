@@ -16,15 +16,10 @@ namespace MonkeModManager
 {
     public partial class FormMain : Form
     {
-
-        private const string BaseEndpoint = "https://api.github.com/repos/";
-        private const Int16 CurrentVersion = 4;
-        private List<ReleaseInfo> releases;
-        Dictionary<string, int> groups = new Dictionary<string, int>();
-        private string InstallDirectory = @"";
-        public bool isSteam = true;
-        public bool platformDetected = false;
-        public bool listOtherLoaderMods = false;
+        public List<ReleaseInfo> Releases = [];
+        public List<string> Groups = [];
+        public string InstallDirectory = "";
+        public bool PlatformDetected, ListOtherLoaderMods;
 
         public FormMain()
         {
@@ -35,7 +30,6 @@ namespace MonkeModManager
         {
             LocationHandler();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            releases = new List<ReleaseInfo>();
             var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             labelVersion.Text = "MonkeModManager v" + version.Substring(0, version.Length - 2);
 
@@ -58,7 +52,7 @@ namespace MonkeModManager
             
             JSONArray allMods;
 
-            if (!listOtherLoaderMods)
+            if (!ListOtherLoaderMods)
             {
                 allMods = decoded[IsBepInEx() ? "mods" : "melonloader_mods"].AsArray;
             }
@@ -66,11 +60,10 @@ namespace MonkeModManager
             {
                 // put the tables together and remove duplicates from other mod loaders
                 var allBepMods = decoded["mods"].AsArray;
-                var allMLMods = decoded["melonloader_mods"].AsArray;
+                var allMlMods = decoded["melonloader_mods"].AsArray;
 
-                allMods = new JSONArray();
-                var safeTable = IsBepInEx() ? allBepMods : allMLMods;
-                var movingTable = IsBepInEx() ? allMLMods : allBepMods;
+                var safeTable = IsBepInEx() ? allBepMods : allMlMods;
+                var movingTable = IsBepInEx() ? allMlMods : allBepMods;
 
                 allMods = safeTable;
                 foreach (var item in movingTable)
@@ -105,62 +98,64 @@ namespace MonkeModManager
                 if (release.MelInEx)
                     release.Dependencies.Add("MelInEx");
 
-                releases.Add(release);
+                Releases.Add(release);
             }
 
             for (int i = 0; i < allGroups.Count; i++)
             {
                 JSONNode current = allGroups[i];
-                if (releases.Any(x => x.Group == current["name"]) && !groups.ContainsKey(current["name"]))
+                if (Releases.Any(x => x.Group == current["name"]) && !Groups.Contains(current["name"]))
                 {
-                    groups.Add(current["name"], groups.Count());
+                    Groups.Add(current["name"]);
                 }
             }
 
-            if (!groups.ContainsKey("Uncategorized"))
-                groups.Add("Uncategorized", groups.Count());
+            if (!Groups.Contains("Uncategorized"))
+                Groups.Add("Uncategorized");
 
-            foreach (ReleaseInfo release in releases)
-            {
-                foreach (string dep in release.Dependencies)
+            foreach (var release in Releases)
+                release.Dependencies.ForEach(dep =>
                 {
-                    releases.Where(x => x.Name == dep).FirstOrDefault()?.Dependents.Add(release.Name);
-                }
-            }
-            //WriteReleasesToDisk();
+                    try
+                    {
+                        var f = Releases.First(x => x.Name == dep);
+                        f.Dependents.Add(release.Name);
+                    } catch {}
+                });
         }
 
         private void RenderModList()
         {
             listViewMods.Items.Clear();
 
-            foreach (ReleaseInfo release in releases)
+            foreach (ReleaseInfo release in Releases)
             {
                 if (searchBarText.Text != "" && !release.Name.ToLower().Contains(searchBarText.Text.ToLower()))
                     continue;
 
-                ListViewItem item = new ListViewItem();
-                item.Text = release.Name;
-                item.Text = $"{release.Name} - {release.Version}";
+                ListViewItem item = new()
+                {
+                    Text = $"{release.Name} - {release.Version}",
+                    Tag = release
+                };
                 item.SubItems.Add(release.Author);
-                item.Tag = release;
                 
                 listViewMods.Items.Add(item);
 
                 CheckDefaultMod(release, item);
 
-                if (release.Group == null || !groups.ContainsKey(release.Group))
+                if (release.Group == null || !Groups.Contains(release.Group))
                 {
-                    item.Group = listViewMods.Groups[groups["Uncategorized"]];
+                    item.Group = listViewMods.Groups[Groups.IndexOf("Uncategorized")];
                 }
-                else if (groups.ContainsKey(release.Group))
+                else if (Groups.Contains(release.Group))
                 {
-                    int index = groups[release.Group];
+                    var index = Groups.IndexOf(release.Group);
                     item.Group = listViewMods.Groups[index];
                 }
                 else
                 {
-                    int index = listViewMods.Groups.Add(new ListViewGroup(release.Group, HorizontalAlignment.Left));
+                    var index = listViewMods.Groups.Add(new ListViewGroup(release.Group, HorizontalAlignment.Left));
                     item.Group = listViewMods.Groups[index];
                 }
             }
@@ -170,24 +165,17 @@ namespace MonkeModManager
         {
             UpdateStatus("Getting latest version info...");
             LoadReleases();
-            this.Invoke((MethodInvoker)(() =>
-            {
-                //Invoke so we can call from current thread
-                //Update checkbox's text
-                Dictionary<string, int> includedGroups = new Dictionary<string, int>();
 
-                for (int i = 0; i < groups.Count(); i++)
-                {
-                    var key = groups.First(x => x.Value == i).Key;
-                    var value = listViewMods.Groups.Add(new ListViewGroup(key, HorizontalAlignment.Left));
-                    groups[key] = value;
-                }
+            Invoke((MethodInvoker)(() =>
+            {
+                foreach (var group in Groups)
+                    listViewMods.Groups.Add(new ListViewGroup(group, HorizontalAlignment.Left));
+                
 
                 RenderModList();
 
                 tabControlMain.Enabled = true;
                 buttonInstall.Enabled = true;
-
             }));
 
             UpdateStatus("Release info updated!");
@@ -202,7 +190,7 @@ namespace MonkeModManager
             ChangeInstallButtonState(false);
             UpdateStatus("Starting install sequence...");
 
-            foreach (var n in releases.Where(r => r.Install))
+            foreach (var n in Releases.Where(r => r.Install))
                 InstallMod(n);
 
             UpdateStatus("Install complete!");
@@ -211,15 +199,16 @@ namespace MonkeModManager
 
         void InstallMod(string modName)
         {
-            var release = releases.First(r => r.Name == modName);
+            var release = Releases.First(r => r.Name == modName);
             InstallMod(release);
         }
 
         void InstallMod(ReleaseInfo release)
         {
-            UpdateStatus(string.Format("Downloading...{0}", release.Name));
+            UpdateStatus($"Downloading... {release.Name}");
             byte[] file = DownloadFile(release.Link);
-            UpdateStatus(string.Format("Installing...{0}", release.Name));
+            UpdateStatus($"Installing... {release.Name}");
+
             string fileName = Path.GetFileName(release.Link);
             if (Path.GetExtension(fileName).Equals(".dll"))
             {
@@ -240,7 +229,7 @@ namespace MonkeModManager
                 UnzipFile(file, InstallDirectory);
             }
 
-            UpdateStatus(string.Format("Installed {0}!", release.Name));
+            UpdateStatus($"Installed {release.Name}!");
         }
 
         #endregion // Installation
@@ -329,7 +318,7 @@ namespace MonkeModManager
                         else
                         {
                             release.Install = false;
-                            if (releases.Count(x => plugin.Dependents.Contains(x.Name) && x.Install) <= 1)
+                            if (Releases.Count(x => plugin.Dependents.Contains(x.Name) && x.Install) <= 1)
                             {
                                 item.Checked = false;
                                 item.ForeColor = System.Drawing.Color.Black;
@@ -342,7 +331,7 @@ namespace MonkeModManager
             // don't allow user to uncheck if a dependent is checked
             if (release.Dependents.Count > 0)
             {
-                if (releases.Count(x => release.Dependents.Contains(x.Name) && x.Install) > 0)
+                if (Releases.Count(x => release.Dependents.Contains(x.Name) && x.Install) > 0)
                 {
                     e.Item.Checked = true;
                 }
@@ -401,7 +390,7 @@ namespace MonkeModManager
                         File.Delete(f);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     UpdateStatus("Failed to uninstall mods.");
@@ -432,7 +421,7 @@ namespace MonkeModManager
                     if (File.Exists(saveFileDialog.FileName)) File.Delete(saveFileDialog.FileName);
                     ZipFile.CreateFromDirectory(pluginsPath, saveFileDialog.FileName);
                 }
-                catch (Exception ex)
+                catch
                 {
                     MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     UpdateStatus("Failed to back up mods.");
@@ -486,7 +475,7 @@ namespace MonkeModManager
 
                         UpdateStatus("Successfully restored mods!");
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         UpdateStatus("Failed to restore mods.");
@@ -725,19 +714,17 @@ namespace MonkeModManager
 
         private void LocationHandler()
         {
-            var knownPath = GetSavedLocation();
+            var knownPath = GetSavedLocation() ?? GetSteamLocation();
+
             if (knownPath == "")
-                knownPath = GetSteamLocation();
+                knownPath = GetOculusLocation();
 
             if (knownPath != "" && Directory.Exists(knownPath) && File.Exists(knownPath + @"\Gorilla Tag.exe"))
             {
-                if (File.Exists(knownPath + @"\Gorilla Tag.exe"))
-                {
-                    textBoxDirectory.Text = knownPath;
-                    InstallDirectory = knownPath;
-                    platformDetected = true;
-                    return;
-                }
+                textBoxDirectory.Text = knownPath;
+                InstallDirectory = knownPath;
+                PlatformDetected = true;
+                return;
             }
 
             ShowErrorFindingDirectoryMessage();
@@ -757,6 +744,32 @@ namespace MonkeModManager
             return (string)Registry.GetValue(
                 @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 1533390",
                 @"InstallLocation", "");
+        }
+
+        private string GetOculusLocation()
+        {
+            var oculusLibraryId = (string)Registry.GetValue(
+                @"HKEY_CURRENT_USER\Software\Oculus VR, LLC\Oculus\Libraries",
+                @"DefaultLibrary", "");
+
+            if (oculusLibraryId == "")
+                return oculusLibraryId;
+
+            var oculusLibraryPath = (string)Registry.GetValue(
+                @"HKEY_CURRENT_USER\Software\Oculus VR, LLC\Oculus\Libraries\" + oculusLibraryId,
+                @"OriginalPath", "");
+
+            if (oculusLibraryPath == "")
+                return "";
+
+            var gtFolder = Path.Combine(oculusLibraryPath, "Software", "another-axiom-gorilla-tag");
+
+            if (!Directory.Exists(gtFolder))
+                return "";
+
+            var gtExe = Path.Combine(gtFolder, "Gorilla Tag.exe");
+
+            return File.Exists(gtExe) ? gtFolder : "";
         }
 
         private string GetSavedLocation()
@@ -828,24 +841,24 @@ namespace MonkeModManager
             public bool dir;
         }
 
-        public static ModFolder[] BepInExData = new ModFolder[]
-        {
-            new ModFolder{name="MLLoader", dir=true},
-            new ModFolder{name=".doorstop_version", dir=false},
-            new ModFolder{name="changelog.txt", dir=false},
-            new ModFolder{name="doorstop_config.ini", dir=false},
-            new ModFolder{name="winhttp.dll", dir=false},
-        };
+        public static ModFolder[] BepInExData =
+        [
+            new ModFolder {name="MLLoader", dir=true},
+            new ModFolder {name=".doorstop_version", dir=false},
+            new ModFolder {name="changelog.txt", dir=false},
+            new ModFolder {name="doorstop_config.ini", dir=false},
+            new ModFolder {name="winhttp.dll", dir=false},
+        ];
 
-        public static ModFolder[] MelonLoaderData = new ModFolder[]
-        {
-            new ModFolder{name="version.dll", dir=false},
-        };
+        public static ModFolder[] MelonLoaderData =
+        [
+            new ModFolder {name="version.dll", dir=false},
+        ];
 
         public void CleanModLoaderFiles()
         {
             // cleanup files if you are transitioning from another mod loader
-            var cleanStuff = modLoaderBox.Text == "MelonLoader" ? BepInExData : MelonLoaderData;
+            var cleanStuff = IsBepInEx() ? MelonLoaderData : BepInExData;
 
             foreach (var data in cleanStuff)
             {
@@ -859,13 +872,11 @@ namespace MonkeModManager
 
         private string GetPluginsPath(bool crossLoadedMod = false)
         {
-            var bepInEx = (modLoaderBox.Text == "BepInEx");
+            var bepInEx = IsBepInEx();
 
             if (bepInEx && !crossLoadedMod)
                 return Path.Combine(InstallDirectory, @"BepInEx\plugins");
-            if (bepInEx)
-                return Path.Combine(InstallDirectory, @"Mods");
-            if (!crossLoadedMod)
+            if (bepInEx || !crossLoadedMod)
                 return Path.Combine(InstallDirectory, @"Mods");
 
             return Path.Combine(InstallDirectory, @"BepInEx\plugins");
@@ -879,37 +890,15 @@ namespace MonkeModManager
         private void AutoDetectModLoader()
         {
             modLoaderAutoDetectBox.Checked =
-                (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "AutoDetectLoader",
-                    "True") == "True";
+                (string)(Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "AutoDetectLoader",
+                    "True") ?? "True") == "True";
             modLoaderBox.Text = (string)Registry.GetValue(@"HKEY_CURRENT_USER\Software\SirKingBinx\MonkeModManager", "Loader", "BepInEx");
-
-            listOtherLoaderMods = modLoaderBox.Text == "BepInEx"
-                ? File.Exists(Path.Combine(InstallDirectory, @"BepInEx\plugins\MelInEx.dll"))
-                : File.Exists(Path.Combine(InstallDirectory, @"Mods\MelInEx.dll"));
-
             if (!modLoaderAutoDetectBox.Checked)
                 return;
 
-            bool bepinex = false;
+            var bepinex = File.Exists(Path.Combine(InstallDirectory, "winhttp.dll"));
 
-            // with complayer
-            if (Directory.Exists(Path.Combine(InstallDirectory, "BepInEx")) &&
-                File.Exists(Path.Combine(InstallDirectory, "BepInEx", "plugins", "MelInEx.dll")))
-                bepinex = true;
-
-            if (Directory.Exists(Path.Combine(InstallDirectory, "BepInEx")) &&
-                Directory.Exists(Path.Combine(InstallDirectory, "MelonLoader")))
-                bepinex = false;
-
-            if (Directory.Exists(Path.Combine(InstallDirectory, "BepInEx")) &&
-                !Directory.Exists(Path.Combine(InstallDirectory, "MelonLoader")))
-                bepinex = true;
-
-            if (Directory.Exists(Path.Combine(InstallDirectory, "MelonLoader")) &&
-                !Directory.Exists(Path.Combine(InstallDirectory, "BepInEx")))
-                bepinex = false;
-
-            listOtherLoaderMods = bepinex
+            ListOtherLoaderMods = bepinex
                 ? File.Exists(Path.Combine(InstallDirectory, @"BepInEx\plugins\MelInEx.dll"))
                 : File.Exists(Path.Combine(InstallDirectory, @"Mods\MelInEx.dll"));
 
