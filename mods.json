@@ -6,7 +6,6 @@
 			"version": "5.4.23.5",
 			"gitPath": "BepInEx/BepInEx",
 			"group": "Core",
-
 			"browser_download_url": "https://github.com/BepInEx/BepInEx/releases/latest/download/BepInEx_win_x64_5.4.23.5.zip"
 		},
 		{
@@ -15,7 +14,6 @@
 			"version": "1.6.28",
 			"gitPath": "sirkingbinx/Utilla",
 			"group": "Core",
-
 			"browser_download_url": "https://github.com/sirkingbinx/Utilla/releases/latest/download/Utilla.dll"
 		},
 		{
@@ -24,8 +22,7 @@
 			"version": "1.0.0",
 			"gitPath": "Loafiat/MelInEx",
 			"group": "Core",
-
-			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx/MelInEx_BepInEx.zip?raw=true"
+			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx/MelInEx_BepInEx.zip"
 		},
 		{
 			"name": "BingusNametags++",
@@ -33,7 +30,6 @@
 			"version": "1.4.0",
 			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
 			"group": "Cosmetic",
-
 			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.BepInEx.zip"
 		},
 		{
@@ -42,7 +38,6 @@
 			"version": "1.1.5",
 			"gitPath": "BzzzThe18th/HoneyLib",
 			"group": "Libraries",
-
 			"browser_download_url": "https://github.com/BzzzThe18th/HoneyLib/releases/latest/download/HoneyLib.dll"
 		},
 		{
@@ -51,7 +46,7 @@
 			"version": "1.0.1",
 			"gitPath": "SilvazWasTaken/NoForestBarrier",
 			"group": "Tweaks",
-
+			"dependencies": ["Utilla"],
 			"browser_download_url": "https://github.com/SilvazWasTaken/NoForestBarrier/releases/latest/download/NoForestBarrier.dll"
 		},
 		{
@@ -60,7 +55,6 @@
 			"version": "1.0.1",
 			"gitPath": "https://github.com/NgbatzYT/MonkeCosmetics",
 			"group": "Cosmetic",
-
 			"browser_download_url": "https://github.com/https://github.com/NgbatzYT/MonkeCosmetics/releases/latest/download/MonkeCosmetics.dll"
 		},
 		{
@@ -69,7 +63,6 @@
 			"version": "1.0.0",
 			"gitPath": "pl2w/MonkeLib",
 			"group": "Libraries",
-
 			"browser_download_url": "https://github.com/pl2w/MonkeLib/releases/latest/download/MonkeLib.dll"
 		},
 		{
@@ -79,8 +72,33 @@
 			"gitPath": "lapisgit/GorillaTrials",
 			"group": "Gameplay",
 			"dependencies": ["Utilla"],
-
 			"browser_download_url": "https://github.com/LapisGit/GorillaTrials/releases/latest/download/GorillaTrials.dll"
+		},
+		{
+			"name": "Bark",
+			"author": "KyleTheScientist & SSakuraa",
+			"version": "3.0.0",
+			"gitPath": "SakuraaDevelopment/Bark-v3",
+			"group": "Gameplay",
+			"dependencies": ["Utilla"],
+			"browser_download_url": "https://github.com/SakuraaDevelopment/Bark-v3/releases/latest/download/Bark.dll"
+		}
+		{
+			"name": "Several Bees",
+			"author": "Sev",
+			"version": "1.4.2",
+			"gitPath": "sevvy-wevvy/Several-Bees",
+			"group": "Libraries",
+			"browser_download_url": "https://github.com/sevvy-wevvy/Several-Bees/releases/latest/download/SeveralBees-Gtag.dll"
+		},
+		{
+			"name": "Gorilla Optimizer",
+			"author": "Sev",
+			"version": "1.1.0",
+			"gitPath": "sevvy-wevvy/Gorilla-Optimizer",
+			"group": "Tweaks",
+			"dependencies": ["Several Bees"],
+			"browser_download_url": "https://github.com/sevvy-wevvy/Gorilla-Optimizer/releases/latest/download/GorillaOptimizer.dll"
 		}
 	],
 
@@ -91,7 +109,6 @@
 			"version": "0.7.2",
 			"gitPath": "LavaGang/MelonLoader",
 			"group": "Core",
-
 			"browser_download_url": "https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip"
 		},
 		{
@@ -100,16 +117,14 @@
 			"version": "1.0.0",
 			"gitPath": "Loafiat/MelInEx",
 			"group": "Core",
-
-			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx/MelInEx_MelonLoader.zip?raw=true"
+			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx/MelInEx_MelonLoader.zip"
 		},
 		{
 			"name": "GorillaLibrary",
 			"author": "dev9998 & lapis",
 			"version": "1.0.0",
 			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
-			"group": "Core",
-
+			"group": "Libraries",
 			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.dll"
 		},
 		{
@@ -117,10 +132,18 @@
 			"author": "dev9998 & lapis",
 			"version": "1.0.0",
 			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
-			"group": "Core",
+			"group": "Libraries",
 			"dependencies": ["GorillaLibrary"],
-
 			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.GameModes.dll"
+		},
+		{
+			"name": "GorillaLibrary.Content",
+			"author": "dev9998 & lapis",
+			"version": "1.0.0",
+			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
+			"group": "Libraries",
+			"dependencies": ["GorillaLibrary"],
+			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.Content.dll"
 		},
 		{
 			"name": "Bark",
@@ -128,8 +151,7 @@
 			"version": "1.5.2",
 			"gitPath": "developer9998/Bark",
 			"group": "Gameplay",
-			"dependencies": ["GorillaLibrary", "GorillaLibrary.GameModes"],
-
+			"dependencies": ["GorillaLibrary.GameModes"],
 			"browser_download_url": "https://github.com/developer9998/Bark/releases/latest/download/Bark.dll"
 		},
 		{
@@ -138,7 +160,6 @@
 			"version": "2.4.5",
 			"gitPath": "developer9998/GorillaShirts",
 			"group": "Cosmetic",
-
 			"browser_download_url": "https://github.com/developer9998/GorillaShirts/releases/latest/download/GorillaShirts.dll"
 		},
 		{
@@ -147,7 +168,6 @@
 			"version": "1.1.4",
 			"gitPath": "developer9998/GorillaInfoWatch",
 			"group": "Tweaks",
-
 			"browser_download_url": "https://github.com/developer9998/GorillaInfoWatch/releases/latest/download/GorillaInfoWatch.dll"
 		},
 		{
@@ -156,8 +176,7 @@
 			"version": "1.0.3",
 			"gitPath": "Estati/MonkeModPanel",
 			"group": "Gameplay",
-			"dependencies": ["GorillaLibrary", "GorillaLibrary.GameModes"],
-
+			"dependencies": ["GorillaLibrary.GameModes"],
 			"browser_download_url": "https://github.com/Estati/MonkeModPanel/releases/latest/download/WristMenu.dll"
 		},
 		{
@@ -166,8 +185,7 @@
 			"version": "1.1.0",
 			"gitPath": "baggZ-idk/PCUtils",
 			"group": "Tweaks",
-			"dependencies": ["GorillaLibrary", "GorillaLibrary.GameModes"]
-
+			"dependencies": ["GorillaLibrary.GameModes"],
 			"browser_download_url": "https://github.com/baggZ-idk/PCUtils/releases/latest/download/PCUtils.dll"
 		},
 		{
@@ -176,7 +194,6 @@
 			"version": "1.4.0",
 			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
 			"group": "Cosmetic",
-
 			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.MelonLoader.dll"
 		}
 	],
