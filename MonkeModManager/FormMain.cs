@@ -752,14 +752,14 @@ namespace MonkeModManager
                 @"HKEY_CURRENT_USER\Software\Oculus VR, LLC\Oculus\Libraries",
                 @"DefaultLibrary", "");
 
-            if (oculusLibraryId == "")
-                return oculusLibraryId;
+            if (string.IsNullOrEmpty(oculusLibraryId))
+                return "";
 
             var oculusLibraryPath = (string)Registry.GetValue(
                 @"HKEY_CURRENT_USER\Software\Oculus VR, LLC\Oculus\Libraries\" + oculusLibraryId,
                 @"OriginalPath", "");
 
-            if (oculusLibraryPath == "")
+            if (string.IsNullOrEmpty(oculusLibraryPath))
                 return "";
 
             var gtFolder = Path.Combine(oculusLibraryPath, "Software", "another-axiom-gorilla-tag");
