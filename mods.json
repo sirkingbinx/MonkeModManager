@@ -22,7 +22,7 @@
 			"version": "1.0.0",
 			"gitPath": "Loafiat/MelInEx",
 			"group": "Core",
-			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx/MelInEx_BepInEx.zip"
+			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx_BepInEx.zip"
 		},
 		{
 			"name": "BingusNametags++",
@@ -117,7 +117,7 @@
 			"version": "1.0.0",
 			"gitPath": "Loafiat/MelInEx",
 			"group": "Core",
-			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx/MelInEx_MelonLoader.zip"
+			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx_MelonLoader.zip"
 		},
 		{
 			"name": "GorillaLibrary",
