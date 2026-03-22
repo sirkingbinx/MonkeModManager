@@ -99,6 +99,23 @@
 			"group": "Tweaks",
 			"dependencies": ["Several Bees"],
 			"browser_download_url": "https://github.com/sevvy-wevvy/Gorilla-Optimizer/releases/latest/download/GorillaOptimizer.dll"
+		},
+		{
+			"name": "OculusReportMenu",
+			"author": "bingus",
+			"version": "1.1.0",
+			"gitPath": "sevvy-wevvy/Gorilla-Optimizer",
+			"group": "Tweaks",
+			"dependencies": ["Several Bees"],
+			"browser_download_url": "https://github.com/sevvy-wevvy/Gorilla-Optimizer/releases/latest/download/GorillaOptimizer.dll"
+		},
+		{
+			"name": "OculusReportMenu",
+			"author": "bingus",
+			"version": "2.4.0",
+			"gitPath": "sirkingbinx/OculusReportMenu",
+			"group": "Tweaks",
+			"browser_download_url": "https://github.com/sirkingbinx/OculusReportMenu/releases/latest/download/OculusReportMenu.BepInEx.dll"
 		}
 	],
 
@@ -189,12 +206,12 @@
 			"browser_download_url": "https://github.com/baggZ-idk/PCUtils/releases/latest/download/PCUtils.dll"
 		},
 		{
-			"name": "BingusNametags++",
+			"name": "OculusReportMenu",
 			"author": "bingus",
-			"version": "1.4.0",
-			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
-			"group": "Cosmetic",
-			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.MelonLoader.dll"
+			"version": "2.4.0",
+			"gitPath": "sirkingbinx/OculusReportMenu",
+			"group": "Tweaks",
+			"browser_download_url": "https://github.com/sirkingbinx/OculusReportMenu/releases/latest/download/OculusReportMenu.MelonLoader.dll"
 		}
 	],
 
