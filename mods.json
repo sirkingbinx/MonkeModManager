@@ -103,15 +103,6 @@
 		{
 			"name": "OculusReportMenu",
 			"author": "bingus",
-			"version": "1.1.0",
-			"gitPath": "sevvy-wevvy/Gorilla-Optimizer",
-			"group": "Tweaks",
-			"dependencies": ["Several Bees"],
-			"browser_download_url": "https://github.com/sevvy-wevvy/Gorilla-Optimizer/releases/latest/download/GorillaOptimizer.dll"
-		},
-		{
-			"name": "OculusReportMenu",
-			"author": "bingus",
 			"version": "2.4.0",
 			"gitPath": "sirkingbinx/OculusReportMenu",
 			"group": "Tweaks",
