@@ -11,7 +11,7 @@
 		{
 			"name": "Utilla",
 			"author": "legoandmars, dev, bingus",
-			"version": "1.6.28",
+			"version": "1.6.29",
 			"gitPath": "sirkingbinx/Utilla",
 			"group": "Core",
 			"browser_download_url": "https://github.com/sirkingbinx/Utilla/releases/latest/download/Utilla.dll"
@@ -27,7 +27,7 @@
 		{
 			"name": "BingusNametags++",
 			"author": "bingus",
-			"version": "1.4.0",
+			"version": "1.4.1",
 			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
 			"group": "Cosmetic",
 			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.BepInEx.zip"
@@ -203,6 +203,14 @@
 			"gitPath": "sirkingbinx/OculusReportMenu",
 			"group": "Tweaks",
 			"browser_download_url": "https://github.com/sirkingbinx/OculusReportMenu/releases/latest/download/OculusReportMenu.MelonLoader.dll"
+		},
+		{
+			"name": "BingusNametags++",
+			"author": "bingus",
+			"version": "1.4.1",
+			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
+			"group": "Cosmetic",
+			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.MelonLoader.zip"
 		}
 	],
 
