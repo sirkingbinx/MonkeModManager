@@ -107,6 +107,14 @@
 			"gitPath": "sirkingbinx/OculusReportMenu",
 			"group": "Tweaks",
 			"browser_download_url": "https://github.com/sirkingbinx/OculusReportMenu/releases/latest/download/OculusReportMenu.BepInEx.dll"
+		},
+		{
+			"name": "MonkeFrames",
+			"author": "bingus & uhJames",
+			"version": "1.0",
+			"gitPath": "sirkingbinx/MonkeFrames",
+			"group": "Tweaks",
+			"browser_download_url": "https://github.com/sirkingbinx/MonkeFrames/releases/latest/download/MonkeFrames.BepInEx.zip"
 		}
 	],
 
@@ -211,6 +219,14 @@
 			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
 			"group": "Cosmetic",
 			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.MelonLoader.zip"
+		},
+		{
+			"name": "MonkeFrames",
+			"author": "bingus & uhJames",
+			"version": "1.0",
+			"gitPath": "sirkingbinx/MonkeFrames",
+			"group": "Tweaks",
+			"browser_download_url": "https://github.com/sirkingbinx/MonkeFrames/releases/latest/download/MonkeFrames.MelonLoader.zip"
 		}
 	],
 
