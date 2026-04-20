@@ -52,10 +52,10 @@
 		{
 			"name": "MonkeCosmetics",
 			"author": "Ngbatz",
-			"version": "1.0.1",
-			"gitPath": "https://github.com/NgbatzYT/MonkeCosmetics",
+			"version": "1.0.5",
+			"gitPath": "NgbatzYT/MonkeCosmetics",
 			"group": "Cosmetic",
-			"browser_download_url": "https://github.com/https://github.com/NgbatzYT/MonkeCosmetics/releases/latest/download/MonkeCosmetics.dll"
+			"browser_download_url": "https://github.com/NgbatzYT/MonkeCosmetics/releases/latest/download/MonkeCosmetics.dll"
 		},
 		{
 			"name": "MonkeLib",
@@ -86,7 +86,7 @@
 		{
 			"name": "Several Bees",
 			"author": "Sev",
-			"version": "1.4.2",
+			"version": "2.5.1",
 			"gitPath": "sevvy-wevvy/Several-Bees",
 			"group": "Libraries",
 			"browser_download_url": "https://github.com/sevvy-wevvy/Several-Bees/releases/latest/download/SeveralBees-Gtag.dll"
@@ -138,7 +138,7 @@
 		{
 			"name": "GorillaLibrary",
 			"author": "dev9998 & lapis",
-			"version": "1.0.0",
+			"version": "1.0.1",
 			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
 			"group": "Libraries",
 			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.dll"
@@ -146,7 +146,7 @@
 		{
 			"name": "GorillaLibrary.Gamemodes",
 			"author": "dev9998 & lapis",
-			"version": "1.0.0",
+			"version": "1.0.1",
 			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
 			"group": "Libraries",
 			"dependencies": ["GorillaLibrary"],
@@ -155,7 +155,7 @@
 		{
 			"name": "GorillaLibrary.Content",
 			"author": "dev9998 & lapis",
-			"version": "1.0.0",
+			"version": "1.0.1",
 			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
 			"group": "Libraries",
 			"dependencies": ["GorillaLibrary"],
@@ -198,7 +198,7 @@
 		{
 			"name": "PCUtils",
 			"author": "baggZ",
-			"version": "1.1.0",
+			"version": "1.3",
 			"gitPath": "baggZ-idk/PCUtils",
 			"group": "Tweaks",
 			"dependencies": ["GorillaLibrary.GameModes"],
