@@ -138,28 +138,10 @@
 		{
 			"name": "GorillaLibrary",
 			"author": "dev9998 & lapis",
-			"version": "1.0.1",
+			"version": "1.0.2",
 			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
 			"group": "Libraries",
 			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.dll"
-		},
-		{
-			"name": "GorillaLibrary.Gamemodes",
-			"author": "dev9998 & lapis",
-			"version": "1.0.1",
-			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
-			"group": "Libraries",
-			"dependencies": ["GorillaLibrary"],
-			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.GameModes.dll"
-		},
-		{
-			"name": "GorillaLibrary.Content",
-			"author": "dev9998 & lapis",
-			"version": "1.0.1",
-			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
-			"group": "Libraries",
-			"dependencies": ["GorillaLibrary"],
-			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.Content.dll"
 		},
 		{
 			"name": "Bark",
@@ -167,7 +149,7 @@
 			"version": "1.5.2",
 			"gitPath": "developer9998/Bark",
 			"group": "Gameplay",
-			"dependencies": ["GorillaLibrary.GameModes"],
+			"dependencies": ["GorillaLibrary"],
 			"browser_download_url": "https://github.com/developer9998/Bark/releases/latest/download/Bark.dll"
 		},
 		{
@@ -192,7 +174,7 @@
 			"version": "1.0.3",
 			"gitPath": "Estati/MonkeModPanel",
 			"group": "Gameplay",
-			"dependencies": ["GorillaLibrary.GameModes"],
+			"dependencies": ["GorillaLibrary"],
 			"browser_download_url": "https://github.com/Estati/MonkeModPanel/releases/latest/download/WristMenu.dll"
 		},
 		{
@@ -201,7 +183,7 @@
 			"version": "1.3",
 			"gitPath": "baggZ-idk/PCUtils",
 			"group": "Tweaks",
-			"dependencies": ["GorillaLibrary.GameModes"],
+			"dependencies": ["GorillaLibrary"],
 			"browser_download_url": "https://github.com/baggZ-idk/PCUtils/releases/latest/download/PCUtils.dll"
 		},
 		{
