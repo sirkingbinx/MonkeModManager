@@ -27,10 +27,10 @@
 		{
 			"name": "BingusNametags++",
 			"author": "bingus",
-			"version": "1.4.1",
+			"version": "1.5.0",
 			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
 			"group": "Cosmetic",
-			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.BepInEx.zip"
+			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.dll"
 		},
 		{
 			"name": "HoneyLib",
@@ -111,7 +111,7 @@
 		{
 			"name": "MonkeFrames",
 			"author": "bingus & uhJames",
-			"version": "1.0",
+			"version": "1.1",
 			"gitPath": "sirkingbinx/MonkeFrames",
 			"group": "Tweaks",
 			"browser_download_url": "https://github.com/sirkingbinx/MonkeFrames/releases/latest/download/MonkeFrames.BepInEx.zip"
@@ -197,15 +197,15 @@
 		{
 			"name": "BingusNametags++",
 			"author": "bingus",
-			"version": "1.4.1",
+			"version": "1.5.0",
 			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
 			"group": "Cosmetic",
-			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.MelonLoader.zip"
+			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.dll"
 		},
 		{
 			"name": "MonkeFrames",
 			"author": "bingus & uhJames",
-			"version": "1.0",
+			"version": "1.1",
 			"gitPath": "sirkingbinx/MonkeFrames",
 			"group": "Tweaks",
 			"browser_download_url": "https://github.com/sirkingbinx/MonkeFrames/releases/latest/download/MonkeFrames.MelonLoader.zip"
