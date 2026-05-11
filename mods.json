@@ -115,6 +115,39 @@
 			"gitPath": "sirkingbinx/MonkeFrames",
 			"group": "Tweaks",
 			"browser_download_url": "https://github.com/sirkingbinx/MonkeFrames/releases/latest/download/MonkeFrames.BepInEx.zip"
+		},
+  {
+			"name": "GorillaLibrary",
+			"author": "dev9998 & lapis",
+			"version": "1.0.3",
+			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
+			"group": "Libraries",
+			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.dll"
+		},
+		{
+			"name": "Bark",
+			"author": "KyleTheScientist & dev9998",
+			"version": "1.5.4",
+			"gitPath": "developer9998/Bark",
+			"group": "Gameplay",
+			"dependencies": ["GorillaLibrary"],
+			"browser_download_url": "https://github.com/developer9998/Bark/releases/latest/download/Bark.dll"
+		},
+		{
+			"name": "GorillaShirts",
+			"author": "dev9998",
+			"version": "2.4.7",
+			"gitPath": "developer9998/GorillaShirts",
+			"group": "Cosmetic",
+			"browser_download_url": "https://github.com/developer9998/GorillaShirts/releases/latest/download/GorillaShirts.dll"
+		},
+		{
+			"name": "GorillaInfoWatch",
+			"author": "dev9998",
+			"version": "1.1.6",
+			"gitPath": "developer9998/GorillaInfoWatch",
+			"group": "Tweaks",
+			"browser_download_url": "https://github.com/developer9998/GorillaInfoWatch/releases/latest/download/GorillaInfoWatch.dll"
 		}
 	],
 
@@ -134,39 +167,6 @@
 			"gitPath": "Loafiat/MelInEx",
 			"group": "Core",
 			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx_MelonLoader.zip"
-		},
-		{
-			"name": "GorillaLibrary",
-			"author": "dev9998 & lapis",
-			"version": "1.0.2",
-			"gitPath": "GorillaTagModdingHub/GorillaLibrary",
-			"group": "Libraries",
-			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.dll"
-		},
-		{
-			"name": "Bark",
-			"author": "KyleTheScientist & dev9998",
-			"version": "1.5.2",
-			"gitPath": "developer9998/Bark",
-			"group": "Gameplay",
-			"dependencies": ["GorillaLibrary"],
-			"browser_download_url": "https://github.com/developer9998/Bark/releases/latest/download/Bark.dll"
-		},
-		{
-			"name": "GorillaShirts",
-			"author": "dev9998",
-			"version": "2.4.5",
-			"gitPath": "developer9998/GorillaShirts",
-			"group": "Cosmetic",
-			"browser_download_url": "https://github.com/developer9998/GorillaShirts/releases/latest/download/GorillaShirts.dll"
-		},
-		{
-			"name": "GorillaInfoWatch",
-			"author": "dev9998",
-			"version": "1.1.4",
-			"gitPath": "developer9998/GorillaInfoWatch",
-			"group": "Tweaks",
-			"browser_download_url": "https://github.com/developer9998/GorillaInfoWatch/releases/latest/download/GorillaInfoWatch.dll"
 		},
 		{
 			"name": "MonkeModPanel",
