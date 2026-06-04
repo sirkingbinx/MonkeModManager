@@ -52,10 +52,10 @@
 		{
 			"name": "MonkeCosmetics",
 			"author": "Ngbatz",
-			"version": "1.0.5",
+			"version": "2.0.0 Beta",
 			"gitPath": "NgbatzYT/MonkeCosmetics",
 			"group": "Cosmetic",
-			"browser_download_url": "https://github.com/NgbatzYT/MonkeCosmetics/releases/latest/download/MonkeCosmetics.dll"
+			"browser_download_url": "https://github.com/NgbatzYT/MonkeCosmetics/releases/latest/download/MonkeCosmetics.zip"
 		},
 		{
 			"name": "MonkeLib",
