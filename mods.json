@@ -25,6 +25,14 @@
 			"browser_download_url": "https://git.sirkingbinx.dev/sirkingbinx/BingusNametagsPlusPlus/-/raw/master/Build/BingusNametagsPlusPlus.dll"
 		},
 		{
+			"name": "ColorScreen",
+			"author": "struct",
+			"version": "1.0.0",
+			"gitPath": "struuct/ColorScreen",
+			"group": "Cosmetic",
+			"browser_download_url": "https://github.com/struuct/ColorScreen/releases/latest/download/ColorScreen.dll"
+		},
+		{
 			"name": "HoneyLib",
 			"author": "Buzz",
 			"version": "1.1.5",
