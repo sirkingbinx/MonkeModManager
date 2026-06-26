@@ -158,68 +158,6 @@
 			"browser_download_url": "https://github.com/sevvy-wevvy/Sevs-Better-Nametags/releases/latest/download/Sevs.Better.Nametags.dll"
 		},
 	],
-
-	"melonloader_mods": [
-		{
-			"name": "MelonLoader",
-			"author": "Lava Gang",
-			"version": "0.7.2",
-			"gitPath": "LavaGang/MelonLoader",
-			"group": "Core",
-			"browser_download_url": "https://github.com/LavaGang/MelonLoader/releases/latest/download/MelonLoader.x64.zip"
-		},
-		{
-			"name": "MelInEx",
-			"author": "Loafiat",
-			"version": "1.0.0",
-			"gitPath": "Loafiat/MelInEx",
-			"group": "Core",
-			"browser_download_url": "https://files.sirkingbinx.dev/MonkeModManager/MelInEx_MelonLoader.zip"
-		},
-		{
-			"name": "MonkeModPanel",
-			"author": "Estatic",
-			"version": "1.0.3",
-			"gitPath": "Estati/MonkeModPanel",
-			"group": "Gameplay",
-			"dependencies": ["GorillaLibrary"],
-			"browser_download_url": "https://github.com/Estati/MonkeModPanel/releases/latest/download/WristMenu.dll"
-		},
-		{
-			"name": "PCUtils",
-			"author": "baggZ",
-			"version": "1.3",
-			"gitPath": "baggZ-idk/PCUtils",
-			"group": "Tweaks",
-			"dependencies": ["GorillaLibrary"],
-			"browser_download_url": "https://github.com/baggZ-idk/PCUtils/releases/latest/download/PCUtils.dll"
-		},
-		{
-			"name": "OculusReportMenu",
-			"author": "bingus",
-			"version": "2.4.0",
-			"gitPath": "sirkingbinx/OculusReportMenu",
-			"group": "Tweaks",
-			"browser_download_url": "https://github.com/sirkingbinx/OculusReportMenu/releases/latest/download/OculusReportMenu.MelonLoader.dll"
-		},
-		{
-			"name": "BingusNametags++",
-			"author": "bingus",
-			"version": "1.5.0",
-			"gitPath": "sirkingbinx/BingusNametagsPlusPlus",
-			"group": "Cosmetic",
-			"browser_download_url": "https://github.com/sirkingbinx/BingusNametagsPlusPlus/releases/latest/download/BingusNametagsPlusPlus.dll"
-		},
-		{
-			"name": "MonkeFrames",
-			"author": "bingus & uhJames",
-			"version": "1.1",
-			"gitPath": "sirkingbinx/MonkeFrames",
-			"group": "Tweaks",
-			"browser_download_url": "https://github.com/sirkingbinx/MonkeFrames/releases/latest/download/MonkeFrames.MelonLoader.zip"
-		}
-	],
-
 	"groups": [
 		{
 			"name" : "Core",
