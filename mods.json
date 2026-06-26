@@ -75,8 +75,8 @@
 			"browser_download_url": "https://github.com/LapisGit/GorillaTrials/releases/latest/download/GorillaTrials.dll"
 		},
 		{
-			"name": "Bark",
-			"author": "KyleTheScientist & SSakuraa",
+			"name": "Bark [Utilla]",
+			"author": "KyleTheScientist & Sakuraa",
 			"version": "3.0.0",
 			"gitPath": "SakuraaDevelopment/Bark-v3",
 			"group": "Gameplay",
@@ -125,7 +125,7 @@
 			"browser_download_url": "https://github.com/GorillaTagModdingHub/GorillaLibrary/releases/latest/download/GorillaLibrary.dll"
 		},
 		{
-			"name": "Bark",
+			"name": "Bark [GorillaLibrary]",
 			"author": "KyleTheScientist & dev9998",
 			"version": "1.5.4",
 			"gitPath": "developer9998/Bark",
