@@ -49,28 +49,20 @@
             this.label4 = new System.Windows.Forms.Label();
             this.buttonUninstallAll = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.restoreMelonLoaderButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonBackupMods = new System.Windows.Forms.Button();
             this.restoreBepInExButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.installMelonLoaderModButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.installBepInExModButton = new System.Windows.Forms.Button();
             this.labelVersion = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonDiscordLink = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.mlFolder = new System.Windows.Forms.Button();
             this.buttonBepInEx = new System.Windows.Forms.Button();
             this.buttonOpenConfig = new System.Windows.Forms.Button();
             this.buttonOpenGameFolder = new System.Windows.Forms.Button();
             this.labelOpen = new System.Windows.Forms.Label();
-            this.Loader = new System.Windows.Forms.TabPage();
-            this.autoDetectedLabel = new System.Windows.Forms.Label();
-            this.modLoaderInfoText = new System.Windows.Forms.Label();
-            this.modLoaderAutoDetectBox = new System.Windows.Forms.CheckBox();
-            this.modLoaderBox = new System.Windows.Forms.ComboBox();
             this.buttonModInfo = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.Plugins.SuspendLayout();
@@ -81,7 +73,6 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.Loader.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxDirectory
@@ -143,7 +134,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlMain.Controls.Add(this.Plugins);
             this.tabControlMain.Controls.Add(this.Utilities);
-            this.tabControlMain.Controls.Add(this.Loader);
             this.tabControlMain.Enabled = false;
             this.tabControlMain.Location = new System.Drawing.Point(10, 53);
             this.tabControlMain.Name = "tabControlMain";
@@ -274,25 +264,14 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.restoreMelonLoaderButton);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.buttonBackupMods);
             this.groupBox3.Controls.Add(this.restoreBepInExButton);
-            this.groupBox3.Location = new System.Drawing.Point(13, 104);
+            this.groupBox3.Location = new System.Drawing.Point(13, 128);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(151, 122);
+            this.groupBox3.Size = new System.Drawing.Size(151, 98);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
-            // 
-            // restoreMelonLoaderButton
-            // 
-            this.restoreMelonLoaderButton.Location = new System.Drawing.Point(5, 93);
-            this.restoreMelonLoaderButton.Name = "restoreMelonLoaderButton";
-            this.restoreMelonLoaderButton.Size = new System.Drawing.Size(140, 23);
-            this.restoreMelonLoaderButton.TabIndex = 7;
-            this.restoreMelonLoaderButton.Text = "Restore to MelonLoader";
-            this.restoreMelonLoaderButton.UseVisualStyleBackColor = true;
-            this.restoreMelonLoaderButton.Click += new System.EventHandler(this.restoreMelonLoaderButton_Click);
             // 
             // label3
             // 
@@ -319,30 +298,19 @@
             this.restoreBepInExButton.Name = "restoreBepInExButton";
             this.restoreBepInExButton.Size = new System.Drawing.Size(140, 23);
             this.restoreBepInExButton.TabIndex = 3;
-            this.restoreBepInExButton.Text = "Restore to BepInEx";
+            this.restoreBepInExButton.Text = "Restore Mods Folder";
             this.restoreBepInExButton.UseVisualStyleBackColor = true;
             this.restoreBepInExButton.Click += new System.EventHandler(this.buttonRestoreMods_Click);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.installMelonLoaderModButton);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.installBepInExModButton);
             this.groupBox2.Location = new System.Drawing.Point(13, 8);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(151, 90);
+            this.groupBox2.Size = new System.Drawing.Size(151, 114);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
-            // 
-            // installMelonLoaderModButton
-            // 
-            this.installMelonLoaderModButton.Location = new System.Drawing.Point(6, 60);
-            this.installMelonLoaderModButton.Name = "installMelonLoaderModButton";
-            this.installMelonLoaderModButton.Size = new System.Drawing.Size(140, 23);
-            this.installMelonLoaderModButton.TabIndex = 13;
-            this.installMelonLoaderModButton.Text = "MelonLoader Mod";
-            this.installMelonLoaderModButton.UseVisualStyleBackColor = true;
-            this.installMelonLoaderModButton.Click += new System.EventHandler(this.installMelonLoaderModButton_Click);
             // 
             // label2
             // 
@@ -359,7 +327,7 @@
             this.installBepInExModButton.Name = "installBepInExModButton";
             this.installBepInExModButton.Size = new System.Drawing.Size(140, 23);
             this.installBepInExModButton.TabIndex = 12;
-            this.installBepInExModButton.Text = "BepInEx Mod";
+            this.installBepInExModButton.Text = "Install Mod";
             this.installBepInExModButton.UseVisualStyleBackColor = true;
             this.installBepInExModButton.Click += new System.EventHandler(this.installModButton_Click);
             // 
@@ -396,26 +364,15 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.mlFolder);
             this.groupBox1.Controls.Add(this.buttonBepInEx);
             this.groupBox1.Controls.Add(this.buttonOpenConfig);
             this.groupBox1.Controls.Add(this.buttonOpenGameFolder);
             this.groupBox1.Controls.Add(this.labelOpen);
             this.groupBox1.Location = new System.Drawing.Point(372, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(153, 149);
+            this.groupBox1.Size = new System.Drawing.Size(153, 124);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
-            // 
-            // mlFolder
-            // 
-            this.mlFolder.Location = new System.Drawing.Point(6, 120);
-            this.mlFolder.Name = "mlFolder";
-            this.mlFolder.Size = new System.Drawing.Size(141, 23);
-            this.mlFolder.TabIndex = 7;
-            this.mlFolder.Text = "MelonLoader Folder";
-            this.mlFolder.UseVisualStyleBackColor = true;
-            this.mlFolder.Click += new System.EventHandler(this.mlFolder_Click);
             // 
             // buttonBepInEx
             // 
@@ -455,62 +412,6 @@
             this.labelOpen.Size = new System.Drawing.Size(99, 13);
             this.labelOpen.TabIndex = 6;
             this.labelOpen.Text = "Important Folders";
-            // 
-            // Loader
-            // 
-            this.Loader.Controls.Add(this.autoDetectedLabel);
-            this.Loader.Controls.Add(this.modLoaderInfoText);
-            this.Loader.Controls.Add(this.modLoaderAutoDetectBox);
-            this.Loader.Controls.Add(this.modLoaderBox);
-            this.Loader.Location = new System.Drawing.Point(4, 22);
-            this.Loader.Name = "Loader";
-            this.Loader.Size = new System.Drawing.Size(536, 256);
-            this.Loader.TabIndex = 2;
-            this.Loader.Text = "Loader";
-            this.Loader.UseVisualStyleBackColor = true;
-            // 
-            // autoDetectedLabel
-            // 
-            this.autoDetectedLabel.AutoSize = true;
-            this.autoDetectedLabel.Location = new System.Drawing.Point(436, 16);
-            this.autoDetectedLabel.Name = "autoDetectedLabel";
-            this.autoDetectedLabel.Size = new System.Drawing.Size(86, 13);
-            this.autoDetectedLabel.TabIndex = 3;
-            this.autoDetectedLabel.Text = "(auto-detected)";
-            this.autoDetectedLabel.Visible = false;
-            // 
-            // modLoaderInfoText
-            // 
-            this.modLoaderInfoText.Location = new System.Drawing.Point(11, 149);
-            this.modLoaderInfoText.Name = "modLoaderInfoText";
-            this.modLoaderInfoText.Size = new System.Drawing.Size(511, 92);
-            this.modLoaderInfoText.TabIndex = 2;
-            this.modLoaderInfoText.Text = resources.GetString("modLoaderInfoText.Text");
-            // 
-            // modLoaderAutoDetectBox
-            // 
-            this.modLoaderAutoDetectBox.AutoSize = true;
-            this.modLoaderAutoDetectBox.Location = new System.Drawing.Point(14, 50);
-            this.modLoaderAutoDetectBox.Name = "modLoaderAutoDetectBox";
-            this.modLoaderAutoDetectBox.Size = new System.Drawing.Size(153, 17);
-            this.modLoaderAutoDetectBox.TabIndex = 1;
-            this.modLoaderAutoDetectBox.Text = "Auto-Detect Mod Loader";
-            this.modLoaderAutoDetectBox.UseVisualStyleBackColor = true;
-            this.modLoaderAutoDetectBox.CheckedChanged += new System.EventHandler(this.modLoaderAutoDetectBox_CheckedChanged);
-            // 
-            // modLoaderBox
-            // 
-            this.modLoaderBox.DisplayMember = "0";
-            this.modLoaderBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.modLoaderBox.FormattingEnabled = true;
-            this.modLoaderBox.Items.AddRange(new object[] {
-            "BepInEx",
-            "MelonLoader"});
-            this.modLoaderBox.Location = new System.Drawing.Point(14, 13);
-            this.modLoaderBox.Name = "modLoaderBox";
-            this.modLoaderBox.Size = new System.Drawing.Size(416, 21);
-            this.modLoaderBox.TabIndex = 0;
-            this.modLoaderBox.SelectionChangeCommitted += new System.EventHandler(this.modLoaderBox_SelectionChangeCommitted);
             // 
             // buttonModInfo
             // 
@@ -555,8 +456,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.Loader.ResumeLayout(false);
-            this.Loader.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -590,22 +489,14 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.Button installBepInExModButton;
-        private System.Windows.Forms.Button mlFolder;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TabPage Loader;
-        private System.Windows.Forms.CheckBox modLoaderAutoDetectBox;
-        private System.Windows.Forms.ComboBox modLoaderBox;
-        private System.Windows.Forms.Label modLoaderInfoText;
-        private System.Windows.Forms.Label autoDetectedLabel;
         private System.Windows.Forms.Label searchBarLabel;
         private System.Windows.Forms.TextBox searchBarText;
-        private System.Windows.Forms.Button installMelonLoaderModButton;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button restoreMelonLoaderButton;
     }
 }
 

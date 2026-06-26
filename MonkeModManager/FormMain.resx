@@ -366,16 +366,6 @@
         wWAwGAwGg8FgMBgMBoPBYDAYDAaDwWAwGAwGg8FgMBjWxv8DPpS0y5F36s8AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="modLoaderInfoText.Text" xml:space="preserve">
-    <value>The mod loader is the system in-charge of injecting mods into Gorilla Tag.
-
-BepInEx is the traditional and default choice as it has been the default mod loader for the
-Gorilla Tag Modding Group since 2021.
-
-MelonLoader is a substitute for BepInEx that hasn't been used as long, but promises better
-performance in comparsion to BepInEx.
-</value>
-  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAgIAAAAEAIAAoCAEAFgAAACgAAACAAAAAAAEAAAEAIAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA
